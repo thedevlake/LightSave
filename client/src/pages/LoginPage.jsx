@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import logo from "../assets/logo.png";
 import Aurora from "@/components/Aurora";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircleIcon } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { AlertCircleIcon, CheckCircleIcon } from "lucide-react"; // ✅ import success icon
+import { Link, useRouter } from "@tanstack/react-router";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
-  const handleLogin = (e) => {
+  const router = useRouter();
+
+  const handleLogin = async (e) => {
     e.preventDefault();
 
+    // Basic client-side validation
     if (!email || !password) {
       setError("All fields are required.");
       return;
@@ -30,10 +34,38 @@ function LoginPage() {
     }
 
     setError(null);
-    console.log("Form submitted:", { email, password });
-    alert("Form submitted successfully!");
-    setEmail("");
-    setPassword("");
+
+    try {
+      const response = await fetch("http://localhost:5050/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Login failed");
+        return;
+      }
+
+      // Store JWT
+      localStorage.setItem("token", data.user.token);
+
+      setSuccess(data.message);
+
+      // Delay redirect so success alert is visible
+      setTimeout(() => {
+        router.navigate({ to: "/dashboard" });
+      }, 3000);
+      console.log("Login success state:", data.message);
+      // Reset form
+      setEmail("");
+      setPassword("");
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Server error. Please try again.");
+    }
   };
 
   return (
@@ -47,7 +79,6 @@ function LoginPage() {
         amplitude={1.0}
         speed={1.93}
       />
-
       <div className="flex flex-col items-center w-full max-w-md gap-20">
         <div className="text-center space-y-6">
           <img
@@ -66,7 +97,7 @@ function LoginPage() {
           </div>
         </div>
 
-        {/* form */}
+        {/* Login form */}
         <form
           className="bg-white p-10 rounded-lg shadow-sm shadow-blue-700 w-full max-w-md mb-50"
           onSubmit={handleLogin}
@@ -74,15 +105,25 @@ function LoginPage() {
           <h2 className="text-2xl font-medium mb-6 text-center">
             Welcome Back!{" "}
             <span className="text-gray-400 text-sm block font-normal">
-              Let&apos;s get you signed in securely
+              Let's get you signed in securely
             </span>
           </h2>
 
+          {/* Error Alert */}
           {error && (
             <Alert variant="destructive" className="mb-4">
               <AlertCircleIcon />
               <AlertTitle>Validation Error!</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
+          {/* Success Alert */}
+          {success && (
+            <Alert className="mb-4 border-green-500 bg-green-50">
+              <CheckCircleIcon className="text-green-600" />
+              <AlertTitle>Login Successful</AlertTitle>
+              <AlertDescription>{success}</AlertDescription>
             </Alert>
           )}
 
@@ -95,7 +136,7 @@ function LoginPage() {
                 className="w-full p-2 border border-gray-300 rounded hover:border-[#3306C6]  
                   focus:ring-[#3306C6] focus:border-transparent transition"
                 placeholder="Enter your email"
-                type="text"
+                type="email"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -129,12 +170,25 @@ function LoginPage() {
           </button>
 
           <p className="text-sm text-center mt-4">
-            Don&apos;t have an account?{" "}
-            <Link to="/register" className="text-[#3306C6]">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="text-[#3306C6]  hover:text-amber-500"
+            >
               Get Started
             </Link>
           </p>
         </form>
+        <div className="text-gray-100 fixed bottom-30 text-xs max-w-[15rem] text-center leading-relaxed cursor-pointer">
+          By clicking continue,you agree to our{" "}
+          <a className=" border-b pb-[0.5px] hover:text-amber-100">
+            Terms of service
+          </a>{" "}
+          and{" "}
+          <a className=" border-b pb-[0.5px]  hover:text-amber-100">
+            Privacy Policy
+          </a>
+        </div>
       </div>
     </div>
   );

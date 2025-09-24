@@ -3,20 +3,23 @@ import logo from "../assets/logo.png";
 import Aurora from "@/components/Aurora";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircleIcon } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 
 function RegisterPage() {
-  const [fullName, setFullName] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
-  const handleRegister = (e) => {
+  const router = useRouter();
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     // Basic validation
-    if (!fullName || !email || !password || !confirmPassword) {
+    if (!firstname || !lastname || !email || !password || !confirmPassword) {
       setError("All fields are required.");
       return;
     }
@@ -39,15 +42,37 @@ function RegisterPage() {
 
     setError(null);
 
-    // For now: just log and alert
-    console.log("Registration data:", { fullName, email, password });
-    alert("Registration successful!");
+    // Send data to backend
+    try {
+      const response = await fetch("http://localhost:5050/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ firstname, lastname, email, password }),
+      });
 
-    // Reset form
-    setFullName("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Registration failed");
+        return;
+      }
+      setSuccess(data.message);
+      console.log("Registered user:", data.user);
+
+      // Reset form
+      setFirstname("");
+      setLastname("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+
+      setTimeout(() => {
+        router.navigate({ to: "/login" });
+      }, 3000);
+    } catch (err) {
+      console.error("Registration error:", err);
+      setError("Server error. Please try again.");
+    }
   };
 
   return (
@@ -94,22 +119,45 @@ function RegisterPage() {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
+          {success && (
+            <Alert variant="success" className="mb-4 border-green-500">
+              <AlertCircleIcon className="text-green-600" />
+              <AlertTitle>You've been registered Successfully</AlertTitle>
+              <AlertDescription>{success}</AlertDescription>
+            </Alert>
+          )}
 
           <div className="space-y-4">
             <div>
               <label
-                htmlFor="fullName"
+                htmlFor="firstname"
                 className="block mb-1 text-sm font-medium"
               >
-                Full Name
+                First Name
               </label>
               <input
                 type="text"
-                id="fullName"
-                name="fullName"
-                placeholder="Enter your full name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+                id="firstname"
+                placeholder="Enter your first name"
+                value={firstname}
+                onChange={(e) => setFirstname(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded hover:border-[#3306C6] focus:ring-[#3306C6] focus:border-transparent transition"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="lastname"
+                className="block mb-1 text-sm font-medium"
+              >
+                Last Name
+              </label>
+              <input
+                type="text"
+                id="lastname"
+                placeholder="Enter your last name"
+                value={lastname}
+                onChange={(e) => setLastname(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded hover:border-[#3306C6] focus:ring-[#3306C6] focus:border-transparent transition"
               />
             </div>
@@ -121,7 +169,6 @@ function RegisterPage() {
               <input
                 type="email"
                 id="email"
-                name="email"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -139,7 +186,6 @@ function RegisterPage() {
               <input
                 type="password"
                 id="password"
-                name="password"
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -157,7 +203,6 @@ function RegisterPage() {
               <input
                 type="password"
                 id="confirmPassword"
-                name="confirmPassword"
                 placeholder="Confirm your password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -175,11 +220,21 @@ function RegisterPage() {
 
           <p className="text-sm text-center mt-4">
             Already have an account?{" "}
-            <Link to="/login" className="text-[#3306C6]">
+            <Link to="/login" className="text-[#3306C6] hover:text-amber-500">
               Log in
             </Link>
           </p>
         </form>
+        <div className="text-gray-100 fixed bottom-15 text-xs max-w-[15rem] text-center leading-relaxed cursor-pointer">
+          By clicking continue,you agree to our{" "}
+          <a className=" border-b pb-[0.5px] hover:text-amber-100">
+            Terms of service
+          </a>{" "}
+          and{" "}
+          <a className=" border-b pb-[0.5px]  hover:text-amber-100">
+            Privacy Policy
+          </a>
+        </div>
       </div>
     </div>
   );
