@@ -1,5 +1,5 @@
 import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
-
+import { RefreshCcw } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -9,92 +9,124 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Link } from "@tanstack/react-router";
 
-export function SectionCards() {
+export function SectionCards({ totalIncome, totalExpenses }) {
+  const currentBalance = totalIncome - totalExpenses;
+
   return (
-    <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+      {/* ✅ Current Balance (for now, static) */}
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Total Revenue</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
+          <CardDescription>Current Balance</CardDescription>
+          <CardTitle
+            className={`text-2xl font-semibold tabular-nums ${currentBalance < 0 ? "text-red-600" : ""}`}
+          >
+            ₦{currentBalance.toLocaleString()}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
-              <IconTrendingUp />
-              +12.5%
+              {currentBalance >= 0 ? (
+                <>
+                  <IconTrendingUp /> +
+                  {((currentBalance / totalIncome) * 100).toFixed(1)}%
+                </>
+              ) : (
+                <>
+                  <IconTrendingDown />{" "}
+                  {((currentBalance / totalIncome) * 100).toFixed(1)}%
+                </>
+              )}
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month <IconTrendingUp className="size-4" />
+            Total funds available after expenses{" "}
+            {currentBalance >= 0 ? (
+              <IconTrendingUp className="size-4" />
+            ) : (
+              <IconTrendingDown className="size-4" />
+            )}
           </div>
           <div className="text-muted-foreground">
-            Visitors for the last 6 months
+            Total funds available after expenses
           </div>
         </CardFooter>
       </Card>
+
+      {/* ✅ Total Income (dynamic, but with description/footer preserved) */}
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>New Customers</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            1,234
+          <CardDescription>Total Income</CardDescription>
+          <CardTitle className="text-2xl font-semibold tabular-nums">
+            ₦{totalIncome.toLocaleString()}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
-              <IconTrendingDown />
-              -20%
+              <IconTrendingUp /> +10%
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Down 20% this period <IconTrendingDown className="size-4" />
+            Higher than last period <IconTrendingUp className="size-4" />
           </div>
           <div className="text-muted-foreground">
-            Acquisition needs attention
+            All income tracked in real-time
           </div>
         </CardFooter>
       </Card>
+
+      {/* ✅ Total Expenses (dynamic, with description/footer) */}
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Active Accounts</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            45,678
+          <CardDescription>Total Expenses</CardDescription>
+          <CardTitle className="text-2xl font-semibold tabular-nums text-red-600">
+            ₦{totalExpenses.toLocaleString()}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
-              <IconTrendingUp />
-              +12.5%
+              <IconTrendingDown /> -8%
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Strong user retention <IconTrendingUp className="size-4" />
+            Reduced expenses this period <IconTrendingDown className="size-4" />
           </div>
-          <div className="text-muted-foreground">Engagement exceed targets</div>
+          <div className="text-muted-foreground">
+            Track and manage your spending
+          </div>
         </CardFooter>
       </Card>
+
+      {/* Savings Goals (still static for now, but preserved content) */}
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Growth Rate</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+          <CardDescription>Savings Goals</CardDescription>
+          <CardTitle className="text-2xl font-semibold tabular-nums">
             4.5%
           </CardTitle>
           <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +4.5%
-            </Badge>
+            <Link
+              to="/SavingGoals"
+              aria-label="Navigate to Savings Goals"
+              className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-green-400 to-[#1b5e20] hover:scale-110 hover:shadow-lg transition-transform duration-300"
+            >
+              <RefreshCcw className="animate-spin text-white" />
+              <span className="sr-only">Loading</span>
+            </Link>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Steady performance increase <IconTrendingUp className="size-4" />
+            Progress towards targets <IconTrendingUp className="size-4" />
           </div>
-          <div className="text-muted-foreground">Meets growth projections</div>
+          <div className="text-muted-foreground">
+            Stay motivated and reach your goals
+          </div>
         </CardFooter>
       </Card>
     </div>

@@ -1,614 +1,556 @@
 [
   {
     "id": 1,
-    "header": "Cover page",
-    "type": "Cover page",
-    "status": "In Process",
-    "target": "18",
-    "limit": "5",
-    "reviewer": "Eddie Lake"
+    "header": "Dashboard Overview",
+    "type": "Summary",
+    "status": "Active",
+    "balance": 12500.75,
+    "description": "Overview of current financial status including total balance and recent activity."
   },
   {
     "id": 2,
-    "header": "Table of contents",
-    "type": "Table of contents",
-    "status": "Done",
-    "target": "29",
-    "limit": "24",
-    "reviewer": "Eddie Lake"
+    "header": "Monthly Income",
+    "type": "Income",
+    "status": "Completed",
+    "month": "April",
+    "transactions": [
+      { "id": 1, "amount": 3000, "source": "Salary", "date": "2024-04-01" },
+      { "id": 2, "amount": 200, "source": "Freelance", "date": "2024-04-15" }
+    ]
   },
   {
     "id": 3,
-    "header": "Executive summary",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "10",
-    "limit": "13",
-    "reviewer": "Eddie Lake"
+    "header": "Monthly Expenses",
+    "type": "Expense",
+    "status": "Completed",
+    "month": "April",
+    "transactions": [
+      { "id": 1, "amount": 500, "category": "Rent", "date": "2024-04-03" },
+      { "id": 2, "amount": 150, "category": "Groceries", "date": "2024-04-07" },
+      { "id": 3, "amount": 75, "category": "Utilities", "date": "2024-04-10" }
+    ]
   },
   {
     "id": 4,
-    "header": "Technical approach",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "27",
-    "limit": "23",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Savings Goals",
+    "type": "Goal",
+    "status": "In Progress",
+    "balance": 4000,
+    "description": "Goal to save $10,000 for emergency fund."
   },
   {
     "id": 5,
-    "header": "Design",
-    "type": "Narrative",
-    "status": "In Process",
-    "target": "2",
-    "limit": "16",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Investment Portfolio",
+    "type": "Investment",
+    "status": "Active",
+    "balance": 15000,
+    "investments": [
+      { "id": 1, "type": "Stocks", "value": 8000 },
+      { "id": 2, "type": "Bonds", "value": 4000 },
+      { "id": 3, "type": "Mutual Funds", "value": 3000 }
+    ]
   },
   {
     "id": 6,
-    "header": "Capabilities",
-    "type": "Narrative",
-    "status": "In Process",
-    "target": "20",
-    "limit": "8",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Account Balances",
+    "type": "Account",
+    "status": "Active",
+    "accounts": [
+      { "id": 1, "type": "Checking", "balance": 4500 },
+      { "id": 2, "type": "Savings", "balance": 7000 },
+      { "id": 3, "type": "Credit Card", "balance": -1200 }
+    ]
   },
   {
     "id": 7,
-    "header": "Integration with existing systems",
-    "type": "Narrative",
-    "status": "In Process",
-    "target": "19",
-    "limit": "21",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Budget Planner",
+    "type": "Planning",
+    "status": "In Progress",
+    "description": "Plan monthly budget allocations by category."
   },
   {
     "id": 8,
-    "header": "Innovation and Advantages",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "25",
-    "limit": "26",
-    "reviewer": "Assign reviewer"
+    "header": "Debt Tracker",
+    "type": "Debt",
+    "status": "Active",
+    "balance": 5000,
+    "description": "Track outstanding debts and payment schedules."
   },
   {
     "id": 9,
-    "header": "Overview of EMR's Innovative Solutions",
-    "type": "Technical content",
-    "status": "Done",
-    "target": "7",
-    "limit": "23",
-    "reviewer": "Assign reviewer"
+    "header": "Transaction History",
+    "type": "History",
+    "status": "Active",
+    "transactions": [
+      { "id": 1, "amount": -100, "category": "Dining", "date": "2024-04-05" },
+      { "id": 2, "amount": -50, "category": "Transport", "date": "2024-04-08" },
+      { "id": 3, "amount": 3000, "category": "Salary", "date": "2024-04-01" }
+    ]
   },
   {
     "id": 10,
-    "header": "Advanced Algorithms and Machine Learning",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "30",
-    "limit": "28",
-    "reviewer": "Assign reviewer"
+    "header": "Tax Summary",
+    "type": "Report",
+    "status": "Completed",
+    "description": "Summary of tax deductions and liabilities for the fiscal year."
   },
   {
     "id": 11,
-    "header": "Adaptive Communication Protocols",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "9",
-    "limit": "31",
-    "reviewer": "Assign reviewer"
+    "header": "Recurring Payments",
+    "type": "Subscription",
+    "status": "Active",
+    "transactions": [
+      {
+        "id": 1,
+        "amount": -15,
+        "description": "Streaming Service",
+        "frequency": "Monthly"
+      },
+      {
+        "id": 2,
+        "amount": -50,
+        "description": "Gym Membership",
+        "frequency": "Monthly"
+      }
+    ]
   },
   {
     "id": 12,
-    "header": "Advantages Over Current Technologies",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "12",
-    "limit": "0",
-    "reviewer": "Assign reviewer"
+    "header": "Financial Reports",
+    "type": "Report",
+    "status": "Active",
+    "description": "Generate detailed reports on income, expenses, and net worth."
   },
   {
     "id": 13,
-    "header": "Past Performance",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "22",
-    "limit": "33",
-    "reviewer": "Assign reviewer"
+    "header": "Alerts and Notifications",
+    "type": "Notification",
+    "status": "Active",
+    "description": "Set up alerts for low balance, upcoming bills, and budget overspending."
   },
   {
     "id": 14,
-    "header": "Customer Feedback and Satisfaction Levels",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "15",
-    "limit": "34",
-    "reviewer": "Assign reviewer"
+    "header": "Currency Exchange",
+    "type": "Tool",
+    "status": "Active",
+    "description": "Tool for converting currencies and tracking exchange rates."
   },
   {
     "id": 15,
-    "header": "Implementation Challenges and Solutions",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "3",
-    "limit": "35",
-    "reviewer": "Assign reviewer"
+    "header": "Goals Progress",
+    "type": "Goal",
+    "status": "In Progress",
+    "description": "Track progress of various savings and investment goals."
   },
   {
     "id": 16,
-    "header": "Security Measures and Data Protection Policies",
-    "type": "Narrative",
-    "status": "In Process",
-    "target": "6",
-    "limit": "36",
-    "reviewer": "Assign reviewer"
+    "header": "Cash Flow Analysis",
+    "type": "Analysis",
+    "status": "Active",
+    "description": "Analyze inflow and outflow of cash over selected periods."
   },
   {
     "id": 17,
-    "header": "Scalability and Future Proofing",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "4",
-    "limit": "37",
-    "reviewer": "Assign reviewer"
+    "header": "Emergency Fund",
+    "type": "Savings",
+    "status": "In Progress",
+    "balance": 2500,
+    "description": "Funds set aside for unexpected expenses."
   },
   {
     "id": 18,
-    "header": "Cost-Benefit Analysis",
-    "type": "Plain language",
-    "status": "Done",
-    "target": "14",
-    "limit": "38",
-    "reviewer": "Assign reviewer"
+    "header": "Credit Score",
+    "type": "Report",
+    "status": "Active",
+    "description": "Monitor credit score and factors affecting it."
   },
   {
     "id": 19,
-    "header": "User Training and Onboarding Experience",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "17",
-    "limit": "39",
-    "reviewer": "Assign reviewer"
+    "header": "Investment Performance",
+    "type": "Report",
+    "status": "Active",
+    "description": "Track performance of investment portfolio over time."
   },
   {
     "id": 20,
-    "header": "Future Development Roadmap",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "11",
-    "limit": "40",
-    "reviewer": "Assign reviewer"
+    "header": "Tax Documents",
+    "type": "Document",
+    "status": "Completed",
+    "description": "Store and manage tax-related documents securely."
   },
   {
     "id": 21,
-    "header": "System Architecture Overview",
-    "type": "Technical content",
-    "status": "In Process",
-    "target": "24",
-    "limit": "18",
-    "reviewer": "Maya Johnson"
+    "header": "Bill Reminders",
+    "type": "Reminder",
+    "status": "Active",
+    "description": "Reminders for upcoming bill payments."
   },
   {
     "id": 22,
-    "header": "Risk Management Plan",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "15",
-    "limit": "22",
-    "reviewer": "Carlos Rodriguez"
+    "header": "Savings Account",
+    "type": "Account",
+    "status": "Active",
+    "balance": 7000,
+    "description": "Primary savings account details."
   },
   {
     "id": 23,
-    "header": "Compliance Documentation",
-    "type": "Legal",
-    "status": "In Process",
-    "target": "31",
-    "limit": "27",
-    "reviewer": "Sarah Chen"
+    "header": "Investment Accounts",
+    "type": "Account",
+    "status": "Active",
+    "accounts": [
+      { "id": 1, "name": "Retirement Fund", "balance": 12000 },
+      { "id": 2, "name": "Brokerage Account", "balance": 3000 }
+    ]
   },
   {
     "id": 24,
-    "header": "API Documentation",
-    "type": "Technical content",
-    "status": "Done",
-    "target": "8",
-    "limit": "12",
-    "reviewer": "Raj Patel"
+    "header": "Expense Categories",
+    "type": "Category",
+    "status": "Active",
+    "categories": [
+      "Rent",
+      "Groceries",
+      "Utilities",
+      "Entertainment",
+      "Transport"
+    ]
   },
   {
     "id": 25,
-    "header": "User Interface Mockups",
-    "type": "Visual",
-    "status": "In Process",
-    "target": "19",
-    "limit": "25",
-    "reviewer": "Leila Ahmadi"
+    "header": "Income Sources",
+    "type": "Category",
+    "status": "Active",
+    "categories": ["Salary", "Freelance", "Investments", "Other"]
   },
   {
     "id": 26,
-    "header": "Database Schema",
-    "type": "Technical content",
-    "status": "Done",
-    "target": "22",
-    "limit": "20",
-    "reviewer": "Thomas Wilson"
+    "header": "Recurring Income",
+    "type": "Income",
+    "status": "Active",
+    "transactions": [
+      { "id": 1, "amount": 3000, "source": "Salary", "frequency": "Monthly" }
+    ]
   },
   {
     "id": 27,
-    "header": "Testing Methodology",
-    "type": "Technical content",
-    "status": "In Process",
-    "target": "17",
-    "limit": "14",
-    "reviewer": "Assign reviewer"
+    "header": "One-time Expenses",
+    "type": "Expense",
+    "status": "Active",
+    "transactions": [
+      {
+        "id": 1,
+        "amount": 1200,
+        "category": "New Laptop",
+        "date": "2024-04-12"
+      }
+    ]
   },
   {
     "id": 28,
-    "header": "Deployment Strategy",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "26",
-    "limit": "30",
-    "reviewer": "Eddie Lake"
+    "header": "Financial Goals",
+    "type": "Goal",
+    "status": "Active",
+    "description": "Set and track financial goals like buying a house, vacation, or education."
   },
   {
     "id": 29,
-    "header": "Budget Breakdown",
-    "type": "Financial",
-    "status": "In Process",
-    "target": "13",
-    "limit": "16",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Net Worth Summary",
+    "type": "Summary",
+    "status": "Active",
+    "balance": 35000,
+    "description": "Total assets minus liabilities."
   },
   {
     "id": 30,
-    "header": "Market Analysis",
-    "type": "Research",
-    "status": "Done",
-    "target": "29",
-    "limit": "32",
-    "reviewer": "Sophia Martinez"
+    "header": "Budget vs Actual",
+    "type": "Analysis",
+    "status": "In Progress",
+    "description": "Compare budgeted amounts to actual spending."
   },
   {
     "id": 31,
-    "header": "Competitor Comparison",
-    "type": "Research",
-    "status": "In Process",
-    "target": "21",
-    "limit": "19",
-    "reviewer": "Assign reviewer"
+    "header": "Loan Tracker",
+    "type": "Debt",
+    "status": "Active",
+    "balance": 15000,
+    "description": "Track personal and mortgage loans."
   },
   {
     "id": 32,
-    "header": "Maintenance Plan",
-    "type": "Technical content",
-    "status": "Done",
-    "target": "16",
-    "limit": "23",
-    "reviewer": "Alex Thompson"
+    "header": "Savings Contributions",
+    "type": "Income",
+    "status": "Active",
+    "transactions": [
+      {
+        "id": 1,
+        "amount": 500,
+        "source": "Monthly Savings",
+        "date": "2024-04-02"
+      }
+    ]
   },
   {
     "id": 33,
-    "header": "User Personas",
-    "type": "Research",
-    "status": "In Process",
-    "target": "27",
-    "limit": "24",
-    "reviewer": "Nina Patel"
+    "header": "Investment Contributions",
+    "type": "Income",
+    "status": "Active",
+    "transactions": [
+      {
+        "id": 1,
+        "amount": 1000,
+        "source": "Monthly Investment",
+        "date": "2024-04-05"
+      }
+    ]
   },
   {
     "id": 34,
-    "header": "Accessibility Compliance",
-    "type": "Legal",
-    "status": "Done",
-    "target": "18",
-    "limit": "21",
-    "reviewer": "Assign reviewer"
+    "header": "Expense Tracking",
+    "type": "Expense",
+    "status": "Active",
+    "description": "Track daily expenses by category."
   },
   {
     "id": 35,
-    "header": "Performance Metrics",
-    "type": "Technical content",
-    "status": "In Process",
-    "target": "23",
-    "limit": "26",
-    "reviewer": "David Kim"
+    "header": "Income Tracking",
+    "type": "Income",
+    "status": "Active",
+    "description": "Track all sources of income."
   },
   {
     "id": 36,
-    "header": "Disaster Recovery Plan",
-    "type": "Technical content",
-    "status": "Done",
-    "target": "14",
-    "limit": "17",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Financial Insights",
+    "type": "Report",
+    "status": "Active",
+    "description": "Generate insights and tips based on financial data."
   },
   {
     "id": 37,
-    "header": "Third-party Integrations",
-    "type": "Technical content",
-    "status": "In Process",
-    "target": "25",
-    "limit": "28",
-    "reviewer": "Eddie Lake"
+    "header": "Tax Estimator",
+    "type": "Tool",
+    "status": "Active",
+    "description": "Estimate tax liabilities based on income and deductions."
   },
   {
     "id": 38,
-    "header": "User Feedback Summary",
-    "type": "Research",
-    "status": "Done",
-    "target": "20",
-    "limit": "15",
-    "reviewer": "Assign reviewer"
+    "header": "Budget Alerts",
+    "type": "Notification",
+    "status": "Active",
+    "description": "Alerts when spending exceeds budget limits."
   },
   {
     "id": 39,
-    "header": "Localization Strategy",
-    "type": "Narrative",
-    "status": "In Process",
-    "target": "12",
-    "limit": "19",
-    "reviewer": "Maria Garcia"
+    "header": "Investment Risk Profile",
+    "type": "Report",
+    "status": "Active",
+    "description": "Assess risk tolerance and investment recommendations."
   },
   {
     "id": 40,
-    "header": "Mobile Compatibility",
-    "type": "Technical content",
-    "status": "Done",
-    "target": "28",
-    "limit": "31",
-    "reviewer": "James Wilson"
+    "header": "Account Reconciliation",
+    "type": "Tool",
+    "status": "Active",
+    "description": "Reconcile bank statements with recorded transactions."
   },
   {
     "id": 41,
-    "header": "Data Migration Plan",
-    "type": "Technical content",
-    "status": "In Process",
-    "target": "19",
-    "limit": "22",
-    "reviewer": "Assign reviewer"
+    "header": "Financial Calendar",
+    "type": "Tool",
+    "status": "Active",
+    "description": "Track important financial dates and deadlines."
   },
   {
     "id": 42,
-    "header": "Quality Assurance Protocols",
-    "type": "Technical content",
-    "status": "Done",
-    "target": "30",
-    "limit": "33",
-    "reviewer": "Priya Singh"
+    "header": "Savings Rate",
+    "type": "Metric",
+    "status": "Active",
+    "description": "Calculate percentage of income saved monthly."
   },
   {
     "id": 43,
-    "header": "Stakeholder Analysis",
-    "type": "Research",
-    "status": "In Process",
-    "target": "11",
-    "limit": "14",
-    "reviewer": "Eddie Lake"
+    "header": "Expense Breakdown",
+    "type": "Report",
+    "status": "Active",
+    "description": "Visual breakdown of expenses by category."
   },
   {
     "id": 44,
-    "header": "Environmental Impact Assessment",
-    "type": "Research",
-    "status": "Done",
-    "target": "24",
-    "limit": "27",
-    "reviewer": "Assign reviewer"
+    "header": "Income Breakdown",
+    "type": "Report",
+    "status": "Active",
+    "description": "Visual breakdown of income sources."
   },
   {
     "id": 45,
-    "header": "Intellectual Property Rights",
-    "type": "Legal",
-    "status": "In Process",
-    "target": "17",
-    "limit": "20",
-    "reviewer": "Sarah Johnson"
+    "header": "Financial Advisor Notes",
+    "type": "Notes",
+    "status": "Active",
+    "description": "Record notes and advice from financial advisors."
   },
   {
     "id": 46,
-    "header": "Customer Support Framework",
-    "type": "Narrative",
-    "status": "Done",
-    "target": "22",
-    "limit": "25",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Retirement Planning",
+    "type": "Goal",
+    "status": "In Progress",
+    "description": "Plan and track retirement savings."
   },
   {
     "id": 47,
-    "header": "Version Control Strategy",
-    "type": "Technical content",
-    "status": "In Process",
-    "target": "15",
-    "limit": "18",
-    "reviewer": "Assign reviewer"
+    "header": "Charitable Donations",
+    "type": "Expense",
+    "status": "Active",
+    "transactions": [
+      { "id": 1, "amount": 200, "category": "Charity", "date": "2024-04-10" }
+    ]
   },
   {
     "id": 48,
-    "header": "Continuous Integration Pipeline",
-    "type": "Technical content",
-    "status": "Done",
-    "target": "26",
-    "limit": "29",
-    "reviewer": "Michael Chen"
+    "header": "Insurance Policies",
+    "type": "Account",
+    "status": "Active",
+    "description": "Manage insurance policy details and premiums."
   },
   {
     "id": 49,
-    "header": "Regulatory Compliance",
-    "type": "Legal",
-    "status": "In Process",
-    "target": "13",
-    "limit": "16",
-    "reviewer": "Assign reviewer"
+    "header": "Credit Card Summary",
+    "type": "Account",
+    "status": "Active",
+    "balance": -1200,
+    "description": "Summary of credit card balances and payments."
   },
   {
     "id": 50,
-    "header": "User Authentication System",
-    "type": "Technical content",
-    "status": "Done",
-    "target": "28",
-    "limit": "31",
-    "reviewer": "Eddie Lake"
+    "header": "Monthly Summary",
+    "type": "Summary",
+    "status": "Completed",
+    "month": "April",
+    "description": "Summary of income, expenses, and savings for the month."
   },
   {
     "id": 51,
-    "header": "Data Analytics Framework",
-    "type": "Technical content",
-    "status": "In Process",
-    "target": "21",
-    "limit": "24",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Yearly Financial Summary",
+    "type": "Summary",
+    "status": "Active",
+    "description": "Annual overview of financial performance."
   },
   {
     "id": 52,
-    "header": "Cloud Infrastructure",
-    "type": "Technical content",
-    "status": "Done",
-    "target": "16",
-    "limit": "19",
-    "reviewer": "Assign reviewer"
+    "header": "Investment Diversification",
+    "type": "Report",
+    "status": "Active",
+    "description": "Analysis of investment allocation across asset classes."
   },
   {
     "id": 53,
-    "header": "Network Security Measures",
-    "type": "Technical content",
-    "status": "In Process",
-    "target": "29",
-    "limit": "32",
-    "reviewer": "Lisa Wong"
+    "header": "Expense Forecast",
+    "type": "Planning",
+    "status": "In Progress",
+    "description": "Project future expenses based on historical data."
   },
   {
     "id": 54,
-    "header": "Project Timeline",
+    "header": "Income Forecast",
     "type": "Planning",
-    "status": "Done",
-    "target": "14",
-    "limit": "17",
-    "reviewer": "Eddie Lake"
+    "status": "In Progress",
+    "description": "Project future income based on trends."
   },
   {
     "id": 55,
-    "header": "Resource Allocation",
-    "type": "Planning",
-    "status": "In Process",
-    "target": "27",
-    "limit": "30",
-    "reviewer": "Assign reviewer"
+    "header": "Financial Education",
+    "type": "Resource",
+    "status": "Active",
+    "description": "Access to articles and tutorials on personal finance."
   },
   {
     "id": 56,
-    "header": "Team Structure and Roles",
-    "type": "Planning",
-    "status": "Done",
-    "target": "20",
-    "limit": "23",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Tax Filing Checklist",
+    "type": "Checklist",
+    "status": "Active",
+    "description": "Checklist to prepare for tax filing season."
   },
   {
     "id": 57,
-    "header": "Communication Protocols",
-    "type": "Planning",
-    "status": "In Process",
-    "target": "15",
-    "limit": "18",
-    "reviewer": "Assign reviewer"
+    "header": "Account Settings",
+    "type": "Settings",
+    "status": "Active",
+    "description": "Manage user preferences and account details."
   },
   {
     "id": 58,
-    "header": "Success Metrics",
-    "type": "Planning",
-    "status": "Done",
-    "target": "30",
-    "limit": "33",
-    "reviewer": "Eddie Lake"
+    "header": "Security Settings",
+    "type": "Settings",
+    "status": "Active",
+    "description": "Manage security options including two-factor authentication."
   },
   {
     "id": 59,
-    "header": "Internationalization Support",
-    "type": "Technical content",
-    "status": "In Process",
-    "target": "23",
-    "limit": "26",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Backup and Restore",
+    "type": "Tool",
+    "status": "Active",
+    "description": "Backup financial data and restore from previous backups."
   },
   {
     "id": 60,
-    "header": "Backup and Recovery Procedures",
-    "type": "Technical content",
-    "status": "Done",
-    "target": "18",
-    "limit": "21",
-    "reviewer": "Assign reviewer"
+    "header": "App Notifications",
+    "type": "Settings",
+    "status": "Active",
+    "description": "Manage notifications preferences."
   },
   {
     "id": 61,
-    "header": "Monitoring and Alerting System",
-    "type": "Technical content",
-    "status": "In Process",
-    "target": "25",
-    "limit": "28",
-    "reviewer": "Daniel Park"
+    "header": "User Feedback",
+    "type": "Feedback",
+    "status": "Active",
+    "description": "Collect and review user feedback for app improvements."
   },
   {
     "id": 62,
-    "header": "Code Review Guidelines",
-    "type": "Technical content",
-    "status": "Done",
-    "target": "12",
-    "limit": "15",
-    "reviewer": "Eddie Lake"
+    "header": "Support Center",
+    "type": "Support",
+    "status": "Active",
+    "description": "Access help articles and contact support."
   },
   {
     "id": 63,
-    "header": "Documentation Standards",
-    "type": "Technical content",
-    "status": "In Process",
-    "target": "27",
-    "limit": "30",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Data Export",
+    "type": "Tool",
+    "status": "Active",
+    "description": "Export financial data in various formats."
   },
   {
     "id": 64,
-    "header": "Release Management Process",
-    "type": "Planning",
-    "status": "Done",
-    "target": "22",
-    "limit": "25",
-    "reviewer": "Assign reviewer"
+    "header": "Import Data",
+    "type": "Tool",
+    "status": "Active",
+    "description": "Import transactions and account data from external sources."
   },
   {
     "id": 65,
-    "header": "Feature Prioritization Matrix",
-    "type": "Planning",
-    "status": "In Process",
-    "target": "19",
-    "limit": "22",
-    "reviewer": "Emma Davis"
+    "header": "Multi-currency Support",
+    "type": "Feature",
+    "status": "Active",
+    "description": "Manage accounts and transactions in multiple currencies."
   },
   {
     "id": 66,
-    "header": "Technical Debt Assessment",
-    "type": "Technical content",
-    "status": "Done",
-    "target": "24",
-    "limit": "27",
-    "reviewer": "Eddie Lake"
+    "header": "Recurring Transfers",
+    "type": "Feature",
+    "status": "Active",
+    "description": "Set up scheduled transfers between accounts."
   },
   {
     "id": 67,
-    "header": "Capacity Planning",
-    "type": "Planning",
-    "status": "In Process",
-    "target": "21",
-    "limit": "24",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Financial Goals History",
+    "type": "History",
+    "status": "Active",
+    "description": "Track progress and completion of past financial goals."
   },
   {
     "id": 68,
-    "header": "Service Level Agreements",
-    "type": "Legal",
-    "status": "Done",
-    "target": "26",
-    "limit": "29",
-    "reviewer": "Assign reviewer"
+    "header": "Privacy Policy",
+    "type": "Document",
+    "status": "Active",
+    "description": "Details on data privacy and user rights."
   }
 ]

@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as AddExpenseRouteImport } from './routes/addExpense'
+import { Route as SavingGoalsRouteImport } from './routes/SavingGoals'
 import { Route as IndexRouteImport } from './routes/index'
 
 const RegisterRoute = RegisterRouteImport.update({
@@ -29,6 +31,16 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AddExpenseRoute = AddExpenseRouteImport.update({
+  id: '/addExpense',
+  path: '/addExpense',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SavingGoalsRoute = SavingGoalsRouteImport.update({
+  id: '/SavingGoals',
+  path: '/SavingGoals',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +49,16 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/SavingGoals': typeof SavingGoalsRoute
+  '/addExpense': typeof AddExpenseRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/SavingGoals': typeof SavingGoalsRoute
+  '/addExpense': typeof AddExpenseRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
@@ -50,20 +66,43 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/SavingGoals': typeof SavingGoalsRoute
+  '/addExpense': typeof AddExpenseRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/login' | '/register'
+  fullPaths:
+    | '/'
+    | '/SavingGoals'
+    | '/addExpense'
+    | '/dashboard'
+    | '/login'
+    | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/login' | '/register'
-  id: '__root__' | '/' | '/dashboard' | '/login' | '/register'
+  to:
+    | '/'
+    | '/SavingGoals'
+    | '/addExpense'
+    | '/dashboard'
+    | '/login'
+    | '/register'
+  id:
+    | '__root__'
+    | '/'
+    | '/SavingGoals'
+    | '/addExpense'
+    | '/dashboard'
+    | '/login'
+    | '/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SavingGoalsRoute: typeof SavingGoalsRoute
+  AddExpenseRoute: typeof AddExpenseRoute
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
@@ -92,6 +131,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/addExpense': {
+      id: '/addExpense'
+      path: '/addExpense'
+      fullPath: '/addExpense'
+      preLoaderRoute: typeof AddExpenseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/SavingGoals': {
+      id: '/SavingGoals'
+      path: '/SavingGoals'
+      fullPath: '/SavingGoals'
+      preLoaderRoute: typeof SavingGoalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +157,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SavingGoalsRoute: SavingGoalsRoute,
+  AddExpenseRoute: AddExpenseRoute,
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,

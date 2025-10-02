@@ -59,7 +59,7 @@ const register = async (req, res) => {
 
     // 6. Return response
     return res.status(201).json({
-      message: "User registered successfully",
+      message: "Success!",
       user: {
         id: newUser.id,
         firstname: newUser.firstname,
@@ -126,4 +126,23 @@ const login = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-export { register, login };
+
+const me = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+    });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    return res.json({
+      id: user.id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      role: user.role,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+export { register, login, me };
