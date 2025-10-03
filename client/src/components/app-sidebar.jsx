@@ -39,7 +39,7 @@ const data = {
   ],
   notifications: [{ title: "Alerts", url: "#", icon: IconBell }],
   navSecondary: [
-    { title: "Settings", url: "#", icon: IconSettings },
+    { title: "Settings", url: "/settings", icon: IconSettings },
     { title: "Support", url: "#", icon: IconHelp },
     { title: "Search", url: "#", icon: IconSearch },
   ],
