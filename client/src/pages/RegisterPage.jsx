@@ -129,7 +129,7 @@ function RegisterPage() {
         />
       </div>
 
-      <div className="flex flex-col items-center w-full max-w-sm sm:max-w-md md:max-w-lg gap-8 sm:gap-12 md:gap-20 z-10">
+      <div className="flex flex-col items-center w-full max-w-sm sm:max-w-md md:max-w-lg gap-8 sm:gap-12 z-10">
         <div className="text-center space-y-4">
           <h1>
             <span
@@ -148,25 +148,31 @@ function RegisterPage() {
         </div>
 
         <form
-          className="bg-[#f8f5f0] dark:bg-[#0d1b1b]/90 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-xl border border-gray-100/90 dark:border-none shadow-xl shadow-emerald-600/40 w-full max-w-xs sm:max-w-md sm:mb-40"
+          className="bg-[#f8f5f0] dark:bg-[#0d1b1b]/90 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-xl dark:border-none border border-gray-100/90 dark:border-gray-700 shadow-xl shadow-emerald-600/40 w-full max-w-xs sm:max-w-md "
           onSubmit={handleRegister}
         >
           <h2 className="text-xl sm:text-2xl font-medium mb-4 sm:mb-6 text-center">
             Get Started
-            <span className="text-gray-400 dark:text-gray-300 text-sm block font-normal mt-1">
+            <span className="text-gray-400 text-sm block font-normal mt-1">
               Create your account securely
             </span>
           </h2>
 
           {error && (
-            <Alert variant="destructive" className="mb-4">
+            <Alert
+              variant="destructive"
+              className="mb-4 dark:bg-muted-foreground dark:border-red-100"
+            >
               <AlertCircleIcon />
               <AlertTitle>Validation Error!</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
           {success && (
-            <Alert variant="success" className="mb-4 border-green-500">
+            <Alert
+              variant="success"
+              className="mb-4 border-green-500 bg-green-50 dark:bg-teal-900/30 dark:border-green-600 dark:text-green-100"
+            >
               <CheckCircleIcon className="text-green-600" />
               <AlertTitle>You've been registered Successfully</AlertTitle>
               <AlertDescription>{success}</AlertDescription>
