@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,7 +19,7 @@ function SettingsPage() {
   const [userInfo, setUserInfo] = useState({
     firstName: "John",
     lastName: "Doe",
-    email: "john.doe@example.com"
+    email: "john.doe@example.com",
   });
 
   const handleThemeToggle = () => {
@@ -40,7 +46,9 @@ function SettingsPage() {
           <Settings className="h-8 w-8 text-primary" />
           <div>
             <h1 className="text-3xl font-bold">Settings</h1>
-            <p className="text-muted-foreground">Manage your account and preferences</p>
+            <p className="text-muted-foreground">
+              Manage your account and preferences
+            </p>
           </div>
         </div>
 
@@ -62,31 +70,37 @@ function SettingsPage() {
                 <Input
                   id="firstName"
                   value={userInfo.firstName}
-                  onChange={(e) => setUserInfo({...userInfo, firstName: e.target.value})}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, firstName: e.target.value })
+                  }
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last Name</Label>
                 <Input
                   id="lastName"
                   value={userInfo.lastName}
-                  onChange={(e) => setUserInfo({...userInfo, lastName: e.target.value})}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, lastName: e.target.value })
+                  }
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
                   value={userInfo.email}
-                  onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, email: e.target.value })
+                  }
                 />
               </div>
 
               <Separator />
-              
+
               <div className="flex gap-2">
                 <Button onClick={handleSaveProfile} className="flex-1">
                   Save Changes
@@ -160,9 +174,9 @@ function SettingsPage() {
                   Update Password
                 </Button>
               </div>
-              
+
               <Separator />
-              
+
               <div className="space-y-2">
                 <Label>Two-Factor Authentication</Label>
                 <p className="text-sm text-muted-foreground">
@@ -179,25 +193,23 @@ function SettingsPage() {
           <Card>
             <CardHeader>
               <CardTitle>About LightSave</CardTitle>
-              <CardDescription>
-                Information about your app
-              </CardDescription>
+              <CardDescription>Information about your app</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label>Version</Label>
                 <p className="text-sm text-muted-foreground">1.0.0</p>
               </div>
-              
+
               <div className="space-y-2">
                 <Label>Last Updated</Label>
                 <p className="text-sm text-muted-foreground">
                   {new Date().toLocaleDateString()}
                 </p>
               </div>
-              
+
               <Separator />
-              
+
               <div className="space-y-2">
                 <Button variant="outline" className="w-full">
                   Export Data
