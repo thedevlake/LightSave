@@ -89,7 +89,7 @@ function LoginPage() {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center h-screen font-raleway bg-gradient-to-tr from-[#04520e] via-[#e5ded2] to-[#04520e] dark:from-black dark:via-[#0f2f2f] dark:to-black relative overflow-hidden transition-all duration-700 ease-in-out ${
+      className={`flex flex-col items-center justify-center min-h-screen font-raleway bg-gradient-to-tr from-[#04520e] via-[#e5ded2] to-[#04520e] dark:from-black dark:via-[#0f2f2f] dark:to-black relative overflow-hidden transition-all duration-700 ease-in-out ${
         isVisible ? "opacity-100" : "opacity-50"
       }`}
     >
@@ -109,11 +109,11 @@ function LoginPage() {
         speed={1.93}
       />
 
-      <div className="flex flex-col items-center w-full max-w-sm sm:max-w-md md:max-w-lg gap-8 sm:gap-12 md:gap-20 z-10">
+      <div className="flex flex-col items-center w-full max-w-lg gap-6 sm:gap-8 md:gap-10 z-10 px-4 sm:px-6">
         <div className="text-center space-y-4">
           <h1>
             <span
-              className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent drop-shadow-lg"
+              className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent drop-shadow-lg"
               style={{
                 backgroundImage:
                   "linear-gradient(90deg, #134e4a 0%, #0d9488 80%, #34d399 60%, #bbf7d0 85%, #ffffff 100%)",
@@ -122,19 +122,19 @@ function LoginPage() {
               LightSave
             </span>
           </h1>
-          <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 max-w-md mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-200 max-w-md mx-auto leading-relaxed">
             Helping you make smarter financial decisions with ease and clarity.
           </p>
         </div>
 
         {/* Login form */}
         <form
-          className="bg-white dark:bg-[#0d1b1b]/90 backdrop-blur-md p-10 rounded-lg shadow-xl border-gray-100/90 dark:border-gray-700 shadow-emerald-600/40 w-full max-w-md mb-50"
+          className="bg-white dark:bg-[#0d1b1b]/90 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-lg shadow-xl border-gray-100/90 dark:border-gray-700 shadow-emerald-600/40 w-full max-w-xs sm:max-w-sm md:max-w-md h-auto sm:h-[500px] md:h-auto "
           onSubmit={handleLogin}
         >
-          <h2 className="text-2xl font-medium mb-6 text-center">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-medium mb-6 text-center">
             Welcome Back!{" "}
-            <span className="text-gray-400 dark:text-gray-300 text-sm block font-normal">
+            <span className="text-xs sm:text-sm md:text-base block text-gray-400 dark:text-gray-300 font-normal">
               Let's get you signed in securely
             </span>
           </h2>
@@ -164,7 +164,7 @@ function LoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-200"
+                className="block mb-1 text-xs sm:text-sm md:text-base font-medium text-gray-700 dark:text-gray-200"
               >
                 Email
               </label>
@@ -184,7 +184,7 @@ function LoginPage() {
             <div>
               <label
                 htmlFor="password"
-                className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-200"
+                className="block mb-1 text-xs sm:text-sm md:text-base font-medium text-gray-700 dark:text-gray-200"
               >
                 Password
               </label>
@@ -222,13 +222,13 @@ function LoginPage() {
           </p>
         </form>
 
-        <div className="absolute bottom-4 sm:bottom-6 text-center px-4 text-gray-600 dark:text-gray-400 text-[10px] sm:text-xs leading-relaxed">
+        <div className="text-center px-4 text-gray-600 dark:text-gray-400 text-[10px] sm:text-sm md:text-base leading-relaxed">
           By clicking continue, you agree to our{" "}
-          <a className="border-b border-gray-400 dark:border-gray-600 hover:text-[#3dc794] dark:hover:text-emerald-300 transition-colors cursor-pointer">
+          <a className="border-b border-gray-400 dark:border-gray-600 hover:text-[#5a7d70] dark:hover:text-emerald-300 transition-colors cursor-pointer">
             Terms of Service
           </a>{" "}
           and{" "}
-          <a className="border-b border-gray-400 dark:border-gray-600 hover:text-[#3dc794] dark:hover:text-emerald-300 transition-colors cursor-pointer">
+          <a className="border-b border-gray-400 dark:border-gray-600 hover:text-[#5a7d70] dark:hover:text-emerald-300 transition-colors cursor-pointer">
             Privacy Policy
           </a>
         </div>
