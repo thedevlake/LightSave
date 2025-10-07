@@ -4,7 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircleIcon, CheckCircleIcon, LoaderCircle } from "lucide-react";
 import { Link, useRouter } from "@tanstack/react-router";
 
-const BASE_URL = "http://localhost:5050/auth/login";
+const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/auth/login`;
 
 function LoginPage() {
   const [email, setEmail] = useState("");
