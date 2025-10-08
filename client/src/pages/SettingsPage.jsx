@@ -8,9 +8,9 @@ import { Settings, User, Shield, LogOut } from "lucide-react";
 
 function SettingsPage() {
   const [userInfo, setUserInfo] = useState({
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com"
+    firstName: "",
+    lastName: "",
+    email: ""
   });
 
   const [passwordForm, setPasswordForm] = useState({
