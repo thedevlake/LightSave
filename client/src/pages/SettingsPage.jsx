@@ -1,36 +1,50 @@
 import React, { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { Settings, User, Palette, Shield, LogOut } from "lucide-react";
+import { Settings, User, Shield, LogOut } from "lucide-react";
 
 function SettingsPage() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [userInfo, setUserInfo] = useState({
     firstName: "John",
     lastName: "Doe",
-    email: "john.doe@example.com",
+    email: "john.doe@example.com"
   });
 
-  const handleThemeToggle = () => {
-    setIsDarkMode(!isDarkMode);
-    // Here you would actually change the theme
-    console.log("Theme changed to:", isDarkMode ? "light" : "dark");
-  };
+  const [passwordForm, setPasswordForm] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: ""
+  });
+
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
 
   const handleSaveProfile = () => {
     console.log("Saving profile:", userInfo);
     // Here you would save to the backend
+  };
+
+  const handlePasswordChange = () => {
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      alert("New passwords do not match!");
+      return;
+    }
+    if (passwordForm.newPassword.length < 6) {
+      alert("New password must be at least 6 characters long!");
+      return;
+    }
+    console.log("Changing password:", passwordForm);
+    // Here you would send to the backend
+    setPasswordForm({ oldPassword: "", newPassword: "", confirmPassword: "" });
+    setShowPasswordForm(false);
+    alert("Password updated successfully!");
+  };
+
+  const handleCancelPassword = () => {
+    setPasswordForm({ oldPassword: "", newPassword: "", confirmPassword: "" });
+    setShowPasswordForm(false);
   };
 
   const handleLogout = () => {
@@ -46,9 +60,7 @@ function SettingsPage() {
           <Settings className="h-8 w-8 text-primary" />
           <div>
             <h1 className="text-3xl font-bold">Settings</h1>
-            <p className="text-muted-foreground">
-              Manage your account and preferences
-            </p>
+            <p className="text-muted-foreground">Manage your account and preferences</p>
           </div>
         </div>
 
@@ -70,37 +82,31 @@ function SettingsPage() {
                 <Input
                   id="firstName"
                   value={userInfo.firstName}
-                  onChange={(e) =>
-                    setUserInfo({ ...userInfo, firstName: e.target.value })
-                  }
+                  onChange={(e) => setUserInfo({...userInfo, firstName: e.target.value})}
                 />
               </div>
-
+              
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last Name</Label>
                 <Input
                   id="lastName"
                   value={userInfo.lastName}
-                  onChange={(e) =>
-                    setUserInfo({ ...userInfo, lastName: e.target.value })
-                  }
+                  onChange={(e) => setUserInfo({...userInfo, lastName: e.target.value})}
                 />
               </div>
-
+              
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
                   value={userInfo.email}
-                  onChange={(e) =>
-                    setUserInfo({ ...userInfo, email: e.target.value })
-                  }
+                  onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}
                 />
               </div>
 
               <Separator />
-
+              
               <div className="flex gap-2">
                 <Button onClick={handleSaveProfile} className="flex-1">
                   Save Changes
@@ -113,45 +119,57 @@ function SettingsPage() {
             </CardContent>
           </Card>
 
-          {/* Theme & Preferences */}
+          {/* About LightSave */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Palette className="h-5 w-5" />
-                Appearance
-              </CardTitle>
+              <CardTitle>About LightSave</CardTitle>
               <CardDescription>
-                Customize how LightSave looks and feels
+                Information about your personal finance app
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label>Dark Mode</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Switch between light and dark themes
-                  </p>
-                </div>
-                <Switch
-                  checked={isDarkMode}
-                  onCheckedChange={handleThemeToggle}
-                />
-              </div>
-
-              <Separator />
-
               <div className="space-y-2">
-                <Label>Current Theme</Label>
-                <Badge variant={isDarkMode ? "default" : "secondary"}>
-                  {isDarkMode ? "Dark" : "Light"} Mode
-                </Badge>
+                <Label>Version</Label>
+                <p className="text-sm text-muted-foreground">1.0.0</p>
               </div>
-
+              
               <div className="space-y-2">
-                <Label>Language</Label>
+                <Label>Last Updated</Label>
                 <p className="text-sm text-muted-foreground">
-                  English (coming soon)
+                  {new Date().toLocaleDateString()}
                 </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Description</Label>
+                <p className="text-sm text-muted-foreground">
+                  LightSave is a lightweight personal finance tracking application that helps you manage income, expenses, and savings goals with clear visual insights.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Features</Label>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Track income and expenses</li>
+                  <li>• Set and monitor savings goals</li>
+                  <li>• Visual dashboards and charts</li>
+                  <li>• Secure user authentication</li>
+                  <li>• Responsive design</li>
+                </ul>
+              </div>
+              
+              <Separator />
+              
+              <div className="space-y-2">
+                <Button variant="outline" className="w-full">
+                  Export Data
+                </Button>
+                <Button variant="outline" className="w-full">
+                  Privacy Policy
+                </Button>
+                <Button variant="outline" className="w-full">
+                  Terms of Service
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -170,13 +188,63 @@ function SettingsPage() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label>Change Password</Label>
-                <Button variant="outline" className="w-full">
-                  Update Password
-                </Button>
+                {!showPasswordForm ? (
+                  <Button 
+                    variant="outline" 
+                    className="w-full"
+                    onClick={() => setShowPasswordForm(true)}
+                  >
+                    Update Password
+                  </Button>
+                ) : (
+                  <div className="space-y-3">
+                    <div className="space-y-2">
+                      <Label htmlFor="oldPassword">Old Password</Label>
+                      <Input
+                        id="oldPassword"
+                        type="password"
+                        value={passwordForm.oldPassword}
+                        onChange={(e) => setPasswordForm({...passwordForm, oldPassword: e.target.value})}
+                        placeholder="Enter current password"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="newPassword">New Password</Label>
+                      <Input
+                        id="newPassword"
+                        type="password"
+                        value={passwordForm.newPassword}
+                        onChange={(e) => setPasswordForm({...passwordForm, newPassword: e.target.value})}
+                        placeholder="Enter new password"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                      <Input
+                        id="confirmPassword"
+                        type="password"
+                        value={passwordForm.confirmPassword}
+                        onChange={(e) => setPasswordForm({...passwordForm, confirmPassword: e.target.value})}
+                        placeholder="Confirm new password"
+                      />
+                    </div>
+                    
+                    <div className="flex gap-2">
+                      <Button onClick={handlePasswordChange} className="flex-1">
+                        Update Password
+                      </Button>
+                      <Button variant="outline" onClick={handleCancelPassword}>
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
-
+              
               <Separator />
-
+              
               <div className="space-y-2">
                 <Label>Two-Factor Authentication</Label>
                 <p className="text-sm text-muted-foreground">
@@ -189,37 +257,6 @@ function SettingsPage() {
             </CardContent>
           </Card>
 
-          {/* App Info */}
-          <Card>
-            <CardHeader>
-              <CardTitle>About LightSave</CardTitle>
-              <CardDescription>Information about your app</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label>Version</Label>
-                <p className="text-sm text-muted-foreground">1.0.0</p>
-              </div>
-
-              <div className="space-y-2">
-                <Label>Last Updated</Label>
-                <p className="text-sm text-muted-foreground">
-                  {new Date().toLocaleDateString()}
-                </p>
-              </div>
-
-              <Separator />
-
-              <div className="space-y-2">
-                <Button variant="outline" className="w-full">
-                  Export Data
-                </Button>
-                <Button variant="outline" className="w-full">
-                  Privacy Policy
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>
