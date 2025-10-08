@@ -4,23 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { Settings, User, Palette, Shield, LogOut } from "lucide-react";
+import { Settings, User, Shield, LogOut } from "lucide-react";
 
 function SettingsPage() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [userInfo, setUserInfo] = useState({
     firstName: "John",
     lastName: "Doe",
     email: "john.doe@example.com"
   });
-
-  const handleThemeToggle = () => {
-    setIsDarkMode(!isDarkMode);
-    // Here you would actually change the theme
-    console.log("Theme changed to:", isDarkMode ? "light" : "dark");
-  };
 
   const handleSaveProfile = () => {
     console.log("Saving profile:", userInfo);
@@ -99,45 +90,57 @@ function SettingsPage() {
             </CardContent>
           </Card>
 
-          {/* Theme & Preferences */}
+          {/* About LightSave */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Palette className="h-5 w-5" />
-                Appearance
-              </CardTitle>
+              <CardTitle>About LightSave</CardTitle>
               <CardDescription>
-                Customize how LightSave looks and feels
+                Information about your personal finance app
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label>Dark Mode</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Switch between light and dark themes
-                  </p>
-                </div>
-                <Switch
-                  checked={isDarkMode}
-                  onCheckedChange={handleThemeToggle}
-                />
-              </div>
-
-              <Separator />
-
               <div className="space-y-2">
-                <Label>Current Theme</Label>
-                <Badge variant={isDarkMode ? "default" : "secondary"}>
-                  {isDarkMode ? "Dark" : "Light"} Mode
-                </Badge>
+                <Label>Version</Label>
+                <p className="text-sm text-muted-foreground">1.0.0</p>
               </div>
-
+              
               <div className="space-y-2">
-                <Label>Language</Label>
+                <Label>Last Updated</Label>
                 <p className="text-sm text-muted-foreground">
-                  English (coming soon)
+                  {new Date().toLocaleDateString()}
                 </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Description</Label>
+                <p className="text-sm text-muted-foreground">
+                  LightSave is a lightweight personal finance tracking application that helps you manage income, expenses, and savings goals with clear visual insights.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Features</Label>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Track income and expenses</li>
+                  <li>• Set and monitor savings goals</li>
+                  <li>• Visual dashboards and charts</li>
+                  <li>• Secure user authentication</li>
+                  <li>• Responsive design</li>
+                </ul>
+              </div>
+              
+              <Separator />
+              
+              <div className="space-y-2">
+                <Button variant="outline" className="w-full">
+                  Export Data
+                </Button>
+                <Button variant="outline" className="w-full">
+                  Privacy Policy
+                </Button>
+                <Button variant="outline" className="w-full">
+                  Terms of Service
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -175,39 +178,6 @@ function SettingsPage() {
             </CardContent>
           </Card>
 
-          {/* App Info */}
-          <Card>
-            <CardHeader>
-              <CardTitle>About LightSave</CardTitle>
-              <CardDescription>
-                Information about your app
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label>Version</Label>
-                <p className="text-sm text-muted-foreground">1.0.0</p>
-              </div>
-              
-              <div className="space-y-2">
-                <Label>Last Updated</Label>
-                <p className="text-sm text-muted-foreground">
-                  {new Date().toLocaleDateString()}
-                </p>
-              </div>
-              
-              <Separator />
-              
-              <div className="space-y-2">
-                <Button variant="outline" className="w-full">
-                  Export Data
-                </Button>
-                <Button variant="outline" className="w-full">
-                  Privacy Policy
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>
