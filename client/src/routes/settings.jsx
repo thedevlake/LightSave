@@ -5,7 +5,7 @@ const SettingsPage = React.lazy(() => import("../pages/SettingsPage"));
 
 export const Route = createFileRoute("/settings")({
   component: () => (
-    <React.Suspense fallback={<div>Loading Settings...</div>}>
+    <React.Suspense fallback={null}>
       <SettingsPage />
     </React.Suspense>
   ),

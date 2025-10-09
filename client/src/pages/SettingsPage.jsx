@@ -4,13 +4,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+
 import { Settings, User, Shield, LogOut } from "lucide-react";
+
+import { Switch } from "@/components/ui/switch";
+import { Badge } from "@/components/ui/badge";
+import { Settings, User, Palette, Shield, LogOut } from "lucide-react";
+import { motion } from "framer-motion";
+
 
 function SettingsPage() {
   const [userInfo, setUserInfo] = useState({
     firstName: "",
     lastName: "",
+
     email: ""
+
+    email: "",
+
   });
 
   const [passwordForm, setPasswordForm] = useState({
@@ -53,7 +64,12 @@ function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background p-6">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      className="min-h-screen bg-background p-6"
+    >
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center gap-3">
@@ -259,7 +275,7 @@ function SettingsPage() {
 
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
