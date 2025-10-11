@@ -123,12 +123,12 @@ function RegisterPage() {
         </span>
       </div>
       <div className="absolute inset-0 z-0 backdrop-blur-xl bg-white/30 dark:bg-black/40" />
-      <div className="absolute inset-0 z-0 opacity-60">
+      <div className="absolute inset-0 z-0 opacity-40 sm:opacity-60 h-full w-full overflow-hidden">
         <Aurora
           colorStops={["#ffffff", "#bbf7d0", "#34d399", "#0d9488", "#134e4a"]}
           blend={1.5}
-          amplitude={1.0}
-          speed={1.93}
+          amplitude={0.8}
+          speed={1.5}
         />
       </div>
 
