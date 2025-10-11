@@ -8,8 +8,8 @@ const TransactionPage = ({ transactions }) => {
     : transactions.slice(0, 5);
 
   return (
-    <div className="shadow-xl rounded-lg p-6 mt-6 w-full bg-[#f8f5f0] dark:bg-[#0d9488]">
-      <h2 className="text-3xl font-semibold mb-6 text-[#1b5e20] dark:text-white">
+    <div className="shadow-xl rounded-lg p-6 mt-6 w-full bg-[#f8f5f0] dark:bg-[#223222b7]">
+      <h2 className="text-2xl font-semibold mb-6 text-[#1b5e20] dark:text-white text-center">
         Cash Flow Overview
       </h2>
 

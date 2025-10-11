@@ -15,6 +15,7 @@ import { IconCirclePlusFilled } from "@tabler/icons-react";
 export function AddExpenseComponent({ onAddExpense }) {
   const [open, setOpen] = useState(false);
   const [expenseAmount, setExpenseAmount] = useState("");
+  const [isSaving, setIsSaving] = useState(false); // ✅ Loading state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +26,6 @@ export function AddExpenseComponent({ onAddExpense }) {
     const expenseCategory = formData.get("expenseCategory");
     const rawAmount = expenseAmount.replace(/,/g, "");
 
-    // Validate input
     if (!expenseName || !expenseDate || !expenseCategory || !rawAmount) {
       alert("Please fill in all fields correctly");
       return;
@@ -36,16 +36,16 @@ export function AddExpenseComponent({ onAddExpense }) {
       alert("Invalid amount entered");
       return;
     }
+
     const payload = {
       expenseName,
       expenseAmount: expenseAmountNumber,
-      expenseDate, // YYYY-MM-DD
+      expenseDate,
       expenseCategory,
-      // currency removed if backend ignores it
     };
-    console.log("Submitting payload:", payload); // Debug: check payload
 
     try {
+      setIsSaving(true); // ✅ Start loading
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Authentication token missing");
 
@@ -61,7 +61,6 @@ export function AddExpenseComponent({ onAddExpense }) {
       const response = await res.json();
       if (!res.ok) throw new Error(response.message || "Failed to add expense");
 
-      // Add to frontend state
       onAddExpense({
         id: response.id,
         date: new Date(response.date).toLocaleDateString(),
@@ -72,13 +71,14 @@ export function AddExpenseComponent({ onAddExpense }) {
         type: "expense",
       });
 
-      // Reset form
       e.target.reset();
       setExpenseAmount("");
       setOpen(false);
     } catch (err) {
       console.error("Failed to add expense:", err);
       alert("Error adding expense: " + err.message);
+    } finally {
+      setIsSaving(false); // ✅ End loading
     }
   };
 
@@ -108,7 +108,6 @@ export function AddExpenseComponent({ onAddExpense }) {
             required
             className="border p-2 rounded"
           />
-
           <input
             type="text"
             name="expenseAmount"
@@ -123,14 +122,12 @@ export function AddExpenseComponent({ onAddExpense }) {
             }}
             className="border p-2 rounded"
           />
-
           <input
             type="date"
             name="expenseDate"
             required
             className="border p-2 rounded"
           />
-
           <select
             name="expenseCategory"
             required
@@ -148,11 +145,13 @@ export function AddExpenseComponent({ onAddExpense }) {
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" variant="outline">
+              <Button type="button" variant="outline" disabled={isSaving}>
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit">Save</Button>
+            <Button type="submit" disabled={isSaving}>
+              {isSaving ? "Saving..." : "Save"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
