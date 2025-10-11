@@ -37,7 +37,6 @@ router.post("/", authenticateToken, async (req, res) => {
         category: expenseCategory,
         amount: parsedAmount,
         date: parsedDate,
-        currency: currency || "₦",
       },
     });
 

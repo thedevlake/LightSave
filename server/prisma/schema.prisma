@@ -56,7 +56,7 @@ model Expense {
   category  String
   amount    Float
   date      DateTime @default(now())
-  currency  String?  @default("₦")  // optional field with default
+  currency  String?  @default("₦")  // make optional with default
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

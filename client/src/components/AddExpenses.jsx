@@ -36,15 +36,13 @@ export function AddExpenseComponent({ onAddExpense }) {
       alert("Invalid amount entered");
       return;
     }
-
     const payload = {
       expenseName,
       expenseAmount: expenseAmountNumber,
-      expenseDate, // YYYY-MM-DD format
+      expenseDate, // YYYY-MM-DD
       expenseCategory,
-      currency: "₦", // default
+      // currency removed if backend ignores it
     };
-
     console.log("Submitting payload:", payload); // Debug: check payload
 
     try {
