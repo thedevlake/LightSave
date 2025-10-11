@@ -49,19 +49,22 @@ function SettingsPage() {
           });
           return;
         }
+
         const res = await fetch(`${BASE_URL}/auth/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+
         if (!res.ok) {
           const errorData = await res.json();
           throw new Error(errorData.message || "Failed to fetch user info");
         }
+
         const data = await res.json();
         setUserInfo({
-          firstName: data.firstName || "",
-          lastName: data.lastName || "",
+          firstName: data.firstname || "",
+          lastName: data.lastname || "",
           email: data.email || "",
         });
       } catch (error) {
@@ -100,7 +103,11 @@ function SettingsPage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(userInfo),
+        body: JSON.stringify({
+          firstname: userInfo.firstName,
+          lastname: userInfo.lastName,
+          email: userInfo.email,
+        }),
       });
       if (!res.ok) {
         const errorData = await res.json();
