@@ -24,9 +24,9 @@ router.get("/", authenticateToken, async (req, res) => {
         id: i.id,
         date: i.date,
         description: i.source,
-        category: i.category || "Income",
+        category: i.category,
         amount: i.amount,
-        currency: "₦",
+        currency: i.currency,
         type: "income",
       })),
       ...expenses.map((e) => ({

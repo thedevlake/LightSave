@@ -20,39 +20,63 @@ export function AddExpenseComponent({ onAddExpense }) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    let expenseObj = Object.fromEntries(formData.entries());
+    const expenseName = formData.get("expenseName");
+    const expenseDate = formData.get("expenseDate");
+    const expenseCategory = formData.get("expenseCategory");
+    const rawAmount = expenseAmount.replace(/,/g, "");
 
-    // Remove commas and ensure number
-    expenseObj.expenseAmount = Number(expenseAmount.replace(/,/g, ""));
+    // ✅ validate before sending
+    if (!expenseName || !expenseDate || !expenseCategory || !rawAmount) {
+      alert("Please fill in all fields correctly");
+      return;
+    }
+
+    const amount = parseFloat(rawAmount);
+    if (isNaN(amount)) {
+      alert("Invalid amount entered");
+      return;
+    }
+
+    const payload = {
+      expenseName,
+      amount,
+      date: expenseDate, // already YYYY-MM-DD
+      category: expenseCategory,
+      currency: "₦",
+    };
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/expense", {
+      if (!token) throw new Error("Authentication token missing");
+
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/expense`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(expenseObj),
+        body: JSON.stringify(payload),
       });
 
-      const newExpense = await res.json();
+      const response = await res.json();
+      if (!res.ok) throw new Error(response.message || "Failed to add expense");
 
       onAddExpense({
-        id: newExpense.id,
-        date: new Date(newExpense.date).toISOString().split("T")[0],
-        description: newExpense.category,
-        amount: Number(newExpense.amount),
-        currency: "₦",
-        category: newExpense.category,
+        id: response.id,
+        date: new Date(response.date).toLocaleDateString(),
+        description: response.description,
+        category: response.category,
+        amount: response.amount,
+        currency: response.currency,
         type: "expense",
       });
 
       e.target.reset();
       setExpenseAmount("");
       setOpen(false);
-    } catch (error) {
-      console.error("Failed to add expense", error);
+    } catch (err) {
+      console.error("Failed to add expense:", err);
+      alert("Error adding expense: " + err.message);
     }
   };
 
@@ -82,32 +106,34 @@ export function AddExpenseComponent({ onAddExpense }) {
             required
             className="border p-2 rounded"
           />
+
           <input
             type="text"
             name="expenseAmount"
             placeholder="Amount"
             required
-            className="border p-2 rounded"
             value={expenseAmount}
             onChange={(e) => {
-              let raw = e.target.value.replace(/,/g, "");
+              const raw = e.target.value.replace(/,/g, "");
               if (/^\d*\.?\d*$/.test(raw)) {
-                const formatted = raw.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                setExpenseAmount(formatted);
+                setExpenseAmount(raw.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
               }
             }}
+            className="border p-2 rounded"
           />
+
           <input
             type="date"
             name="expenseDate"
             required
             className="border p-2 rounded"
           />
+
           <select
             name="expenseCategory"
             required
-            className="border p-2 rounded"
             defaultValue=""
+            className="border p-2 rounded"
           >
             <option value="" disabled>
               Select Category

@@ -1,4 +1,3 @@
-// routes/income.js
 import express from "express";
 import { prisma } from "../db.js";
 import { authenticateToken } from "../middleware/authenticateToken.js";
@@ -8,11 +7,6 @@ const router = express.Router();
 // POST new income
 router.post("/", authenticateToken, async (req, res) => {
   try {
-    // Make sure user is authenticated
-    if (!req.user || !req.user.id) {
-      return res.status(401).json({ message: "User not authenticated" });
-    }
-
     const {
       incomeSourceName,
       incomeAmount,
@@ -21,24 +15,18 @@ router.post("/", authenticateToken, async (req, res) => {
       currency,
     } = req.body;
 
-    // Validate required fields
     if (!incomeSourceName || !incomeAmount || !incomeDate) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // Validate amount
     const amount = parseFloat(incomeAmount);
-    if (isNaN(amount) || amount <= 0) {
-      return res.status(400).json({ message: "Invalid income amount" });
-    }
+    if (isNaN(amount) || amount <= 0)
+      return res.status(400).json({ message: "Invalid amount" });
 
-    // Validate date
     const parsedDate = new Date(incomeDate);
-    if (isNaN(parsedDate.getTime())) {
-      return res.status(400).json({ message: "Invalid date format" });
-    }
+    if (isNaN(parsedDate.getTime()))
+      return res.status(400).json({ message: "Invalid date" });
 
-    // Create income record
     const newIncome = await prisma.income.create({
       data: {
         source: incomeSourceName,
@@ -49,6 +37,7 @@ router.post("/", authenticateToken, async (req, res) => {
         userId: req.user.id,
       },
     });
+
     res.status(201).json({
       id: newIncome.id,
       date: newIncome.date,
@@ -63,5 +52,4 @@ router.post("/", authenticateToken, async (req, res) => {
     res.status(500).json({ message: err.message || "Failed to add income" });
   }
 });
-
 export default router;

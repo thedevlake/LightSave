@@ -7,6 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
@@ -68,10 +69,10 @@ export function AddIncomeComponent({ onAddIncome }) {
       // Format date and amount for TransactionPage
       const formattedIncome = {
         id: newIncome.id,
-        date: new Date(newIncome.incomeDate).toLocaleDateString(),
-        description: newIncome.incomeSourceName,
-        amount: Number(newIncome.incomeAmount),
-        category: newIncome.incomeCategory,
+        date: newIncome.date, // already valid ISO string
+        description: newIncome.description,
+        amount: newIncome.amount,
+        category: newIncome.category,
         currency: newIncome.currency,
         type: "income",
       };
@@ -103,6 +104,9 @@ export function AddIncomeComponent({ onAddIncome }) {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add Income</DialogTitle>
+          <DialogDescription>
+            Fill in the details below to add a new income entry.
+          </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">

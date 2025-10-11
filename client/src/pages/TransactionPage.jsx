@@ -8,7 +8,7 @@ const TransactionPage = ({ transactions }) => {
     : transactions.slice(0, 5);
 
   return (
-    <div className="shadow-xl rounded-lg p-6 mt-6 w-full bg-[#f8f5f0] dark:bg-gradient-to-r from-[#0D9488] to-[#134E4A] bg-clip-text">
+    <div className="shadow-xl rounded-lg p-6 mt-6 w-full bg-[#f8f5f0] dark:bg-[#0d9488]">
       <h2 className="text-3xl font-semibold mb-6 text-[#1b5e20] dark:text-white">
         Cash Flow Overview
       </h2>
@@ -64,12 +64,12 @@ const TransactionPage = ({ transactions }) => {
 
       <div className="mt-6 flex justify-end">
         <button
+          onClick={() => setShowAll(!showAll)}
           className="px-7 py-3 rounded-xl font-semibold shadow-sm transition-all text-xs"
           style={{
             background: "linear-gradient(90deg, #2e7d32 0%, #3fa688 100%)",
             color: "#ffffff",
           }}
-          onClick={() => setShowAll(!showAll)}
         >
           {showAll ? "See Less" : "See More"}
         </button>
