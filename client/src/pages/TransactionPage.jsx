@@ -8,7 +8,7 @@ const TransactionPage = ({ transactions }) => {
     : transactions.slice(0, 5);
 
   return (
-    <div className="shadow-xl rounded-lg p-6 mt-6 w-full bg-[#f8f5f0] dark:bg-gradient-to-r from-[#0D9488] to-[#134E4A] bg-clip-text  ">
+    <div className="shadow-xl rounded-lg p-6 mt-6 w-full bg-[#f8f5f0] dark:bg-gradient-to-r from-[#0D9488] to-[#134E4A] bg-clip-text">
       <h2 className="text-3xl font-semibold mb-6 text-[#1b5e20] dark:text-white">
         Cash Flow Overview
       </h2>
@@ -40,7 +40,9 @@ const TransactionPage = ({ transactions }) => {
                       : "bg-[#f0f0f0] dark:bg-white/50 dark:text-black"
                   }
                 >
-                  <td className="px-6 py-4">{date}</td>
+                  <td className="px-6 py-4">
+                    {new Date(date).toLocaleDateString()}
+                  </td>
                   <td className="px-6 py-4">{description}</td>
                   <td className="px-6 py-4">{category}</td>
                   <td
@@ -51,7 +53,7 @@ const TransactionPage = ({ transactions }) => {
                     }`}
                   >
                     {type === "income" ? "+" : "-"} {currency}{" "}
-                    {parseFloat(amount).toLocaleString()}
+                    {Number(amount).toLocaleString()}
                   </td>
                 </tr>
               )

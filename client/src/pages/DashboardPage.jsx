@@ -1,97 +1,78 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { SectionCards } from "@/components/section-cards";
+import { SidebarInset } from "@/components/ui/sidebar";
 import { SiteHeader } from "@/components/site-header";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { SectionCards } from "@/components/section-cards";
 import Expenses from "./Expenses";
 import TransactionPage from "./TransactionPage";
+import { AddIncomeComponent } from "../components/AddIncome";
 
 function DashboardPage() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  // State for all transactions (both income + expenses)
   const [transactions, setTransactions] = useState([]);
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpenses, setTotalExpenses] = useState(0);
+
+  const fetchTransactions = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch("http://localhost:5050/income", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      const all = data.allTransactions || [];
+
+      setTransactions(all);
+
+      setTotalIncome(
+        all
+          .filter((t) => t.type === "income")
+          .reduce((sum, t) => sum + t.amount, 0)
+      );
+      setTotalExpenses(
+        all
+          .filter((t) => t.type === "expense")
+          .reduce((sum, t) => sum + t.amount, 0)
+      );
+    } catch (err) {
+      console.error("Failed to fetch transactions:", err);
+    }
+  };
 
   useEffect(() => {
-    const t = setTimeout(() => setIsVisible(true), 10);
-    return () => clearTimeout(t);
+    fetchTransactions();
   }, []);
 
-  // ✅ Add income function
   const addIncome = (income) => {
-    const newTransaction = {
-      id: Date.now(),
-      date: income.incomeDate,
-      description: income.incomeSourceName,
-      amount: parseFloat(income.incomeAmount),
-      currency: income.currency,
-      category: income.incomeCategory,
-      type: "income",
-    };
-    setTransactions((prev) => [newTransaction, ...prev]);
+    setTransactions((prev) => [income, ...prev]);
+    setTotalIncome((prev) => prev + Number(income.amount));
   };
 
-  // ✅ Add expense function
-  // ✅ Add expense function
   const addExpense = (expense) => {
-    const newTransaction = {
-      id: Date.now(),
-      date: expense.expenseDate, // match AddExpenseComponent
-      description: expense.expenseName, // what you spent on
-      amount: parseFloat(expense.expenseAmount),
-      currency: expense.currency,
-      category: expense.expenseCategory,
-      type: "expense",
-    };
-    setTransactions((prev) => [newTransaction, ...prev]);
+    setTransactions((prev) => [expense, ...prev]);
+    setTotalExpenses((prev) => prev + Number(expense.amount));
   };
-
-  // ✅ Calculate totals
-  const totalIncome = transactions
-    .filter((t) => t.type === "income")
-    .reduce((sum, t) => sum + (t.amount || 0), 0);
-
-  const totalExpenses = transactions
-    .filter((t) => t.type === "expense")
-    .reduce((sum, t) => sum + (t.amount || 0), 0);
 
   return (
-    <div
-      className={`transition-all duration-700 ease-in-out ${
-        isVisible ? "opacity-100" : "opacity-50"
-      }`}
-    >
+    <div className="transition-all duration-700 ease-in-out">
       <SidebarProvider
         style={{
           "--sidebar-width": "calc(var(--spacing) * 72)",
           "--header-height": "calc(var(--spacing) * 12)",
         }}
       >
-        {/* ✅ Pass addIncome + addExpense into AppSidebar or related components */}
-        <AppSidebar
-          variant="inset"
-          onAddIncome={addIncome}
-          onAddExpense={addExpense}
-        />
-
+        <AppSidebar onAddIncome={addIncome} onAddExpense={addExpense} />
         <SidebarInset>
           <SiteHeader />
           <div className="flex flex-1 flex-col">
             <div className="@container/main flex flex-1 flex-col gap-2">
               <div className="flex flex-col gap-4 md:gap-6 md:py-6 px-4 lg:px-6 py-4">
-                {/* ✅ Pass totalIncome + totalExpenses */}
                 <SectionCards
                   totalIncome={totalIncome}
                   totalExpenses={totalExpenses}
                 />
-
-                {/* Expenses Page (you can pass addExpense if needed) */}
                 <div className="px-4 lg:px-6 py-4">
                   <Expenses onAddExpense={addExpense} />
-                </div>
-
-                {/* Transactions */}
-                <div>
                   <TransactionPage transactions={transactions} />
                 </div>
               </div>

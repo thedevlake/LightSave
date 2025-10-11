@@ -16,15 +16,75 @@ export function AddIncomeComponent({ onAddIncome }) {
   const [open, setOpen] = useState(false);
   const [incomeAmount, setIncomeAmount] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    let incomeObj = Object.fromEntries(formData.entries());
-    incomeObj.incomeAmount = incomeAmount.replace(/,/g, ""); // remove commas
-    onAddIncome(incomeObj);
-    e.target.reset();
-    setIncomeAmount("");
-    setOpen(false);
+    const data = Object.fromEntries(formData.entries());
+
+    const amount = parseFloat(incomeAmount.replace(/,/g, ""));
+    if (isNaN(amount) || amount <= 0) {
+      alert("Please enter a valid amount");
+      return;
+    }
+
+    const payload = {
+      incomeSourceName: data.incomeSourceName,
+      incomeAmount: amount,
+      incomeDate: data.incomeDate,
+      incomeCategory: data.incomeCategory,
+      currency: data.currency,
+    };
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Authentication token is missing. Please log in.");
+        return;
+      }
+      const res = await fetch("http://localhost:5050/income", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        let errorMsg = "Failed to add income";
+        try {
+          const errorData = await res.json();
+          if (errorData && errorData.message) {
+            errorMsg = errorData.message;
+          }
+        } catch {
+          // ignore JSON parsing errors
+        }
+        throw new Error(errorMsg);
+      }
+
+      const newIncome = await res.json();
+
+      // Format date and amount for TransactionPage
+      const formattedIncome = {
+        id: newIncome.id,
+        date: new Date(newIncome.incomeDate).toLocaleDateString(),
+        description: newIncome.incomeSourceName,
+        amount: Number(newIncome.incomeAmount),
+        category: newIncome.incomeCategory,
+        currency: newIncome.currency,
+        type: "income",
+      };
+
+      onAddIncome(formattedIncome);
+
+      e.target.reset();
+      setIncomeAmount("");
+      setOpen(false);
+    } catch (err) {
+      console.error("Error adding income:", err);
+      alert("Error adding income: " + err.message);
+    }
   };
 
   return (
@@ -53,6 +113,7 @@ export function AddIncomeComponent({ onAddIncome }) {
             required
             className="border p-2 rounded"
           />
+
           <input
             type="text"
             name="incomeAmount"
@@ -61,19 +122,21 @@ export function AddIncomeComponent({ onAddIncome }) {
             className="border p-2 rounded"
             value={incomeAmount}
             onChange={(e) => {
-              let raw = e.target.value.replace(/,/g, "");
+              const raw = e.target.value.replace(/,/g, "");
               if (/^\d*\.?\d*$/.test(raw)) {
                 const formatted = raw.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 setIncomeAmount(formatted);
               }
             }}
           />
+
           <input
             type="date"
             name="incomeDate"
             required
             className="border p-2 rounded"
           />
+
           <select
             name="currency"
             required
@@ -87,6 +150,7 @@ export function AddIncomeComponent({ onAddIncome }) {
             <option value="$">$ Dollar</option>
             <option value="€">€ Euro</option>
           </select>
+
           <select
             name="incomeCategory"
             required
@@ -102,7 +166,7 @@ export function AddIncomeComponent({ onAddIncome }) {
             <option value="Other">Other</option>
           </select>
 
-          <DialogFooter>
+          <DialogFooter className="flex gap-2">
             <DialogClose asChild>
               <Button type="button" variant="outline">
                 Cancel

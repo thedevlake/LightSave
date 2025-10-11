@@ -16,12 +16,14 @@ export function SectionCards({ totalIncome, totalExpenses }) {
 
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
-      {/* ✅ Current Balance (for now, static) */}
+      {/* Current Balance */}
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Current Balance</CardDescription>
           <CardTitle
-            className={`text-2xl font-semibold tabular-nums ${currentBalance < 0 ? "text-red-600" : ""}`}
+            className={`text-2xl font-semibold tabular-nums ${
+              currentBalance < 0 ? "text-red-600" : ""
+            }`}
           >
             ₦{currentBalance.toLocaleString()}
           </CardTitle>
@@ -30,12 +32,18 @@ export function SectionCards({ totalIncome, totalExpenses }) {
               {currentBalance >= 0 ? (
                 <>
                   <IconTrendingUp /> +
-                  {((currentBalance / totalIncome) * 100).toFixed(1)}%
+                  {totalIncome
+                    ? ((currentBalance / totalIncome) * 100).toFixed(1)
+                    : 0}
+                  %
                 </>
               ) : (
                 <>
                   <IconTrendingDown />{" "}
-                  {((currentBalance / totalIncome) * 100).toFixed(1)}%
+                  {totalIncome
+                    ? ((currentBalance / totalIncome) * 100).toFixed(1)
+                    : 0}
+                  %
                 </>
               )}
             </Badge>
@@ -56,7 +64,7 @@ export function SectionCards({ totalIncome, totalExpenses }) {
         </CardFooter>
       </Card>
 
-      {/* ✅ Total Income (dynamic, but with description/footer preserved) */}
+      {/* Total Income */}
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Total Income</CardDescription>
@@ -79,7 +87,7 @@ export function SectionCards({ totalIncome, totalExpenses }) {
         </CardFooter>
       </Card>
 
-      {/* ✅ Total Expenses (dynamic, with description/footer) */}
+      {/* Total Expenses */}
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Total Expenses</CardDescription>
@@ -102,7 +110,7 @@ export function SectionCards({ totalIncome, totalExpenses }) {
         </CardFooter>
       </Card>
 
-      {/* Savings Goals (still static for now, but preserved content) */}
+      {/* Savings Goals */}
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Savings Goals</CardDescription>

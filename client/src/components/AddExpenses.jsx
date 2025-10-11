@@ -1,86 +1,74 @@
 import React, { useState } from "react";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
+  DialogTrigger,
   DialogClose,
-} from "./ui/dialog";
-import { Button } from "./ui/button";
-import { SidebarMenuItem, SidebarMenuButton } from "./ui/sidebar";
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
 import { IconCirclePlusFilled } from "@tabler/icons-react";
 
 export function AddExpenseComponent({ onAddExpense }) {
   const [open, setOpen] = useState(false);
   const [expenseAmount, setExpenseAmount] = useState("");
-  const [currency, setCurrency] = useState("");
-  const [expenseCategory, setExpenseCategory] = useState("");
 
-  // Helper to format number with commas
-  function formatNumberWithCommas(value) {
-    // Remove all non-digit except .
-    const num = value.replace(/,/g, "");
-    if (num === "") return "";
-    // Allow decimals
-    const parts = num.split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join(".");
-  }
-
-  const handleAmountChange = (e) => {
-    const input = e.target.value;
-    // Only allow numbers and optional decimal point
-    const cleaned = input.replace(/[^0-9.]/g, "");
-    // Prevent multiple decimals
-    const valid =
-      cleaned.split(".").length > 2
-        ? cleaned.split(".").slice(0, 2).join(".")
-        : cleaned;
-    setExpenseAmount(formatNumberWithCommas(valid));
-  };
-
-  const handleCurrencyChange = (e) => {
-    setCurrency(e.target.value);
-  };
-
-  const handleCategoryChange = (e) => {
-    setExpenseCategory(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData(e.target);
-    // Override expenseAmount, currency, and expenseCategory with controlled states
-    const entries = Object.fromEntries(formData.entries());
-    entries.expenseAmount = expenseAmount.replace(/,/g, "");
-    entries.currency = currency;
-    entries.expenseCategory = expenseCategory;
-    // ✅ send expense data to parent
-    onAddExpense(entries);
-    e.target.reset();
-    setExpenseAmount("");
-    setCurrency("");
-    setExpenseCategory("");
-    setOpen(false);
+    let expenseObj = Object.fromEntries(formData.entries());
+
+    // Remove commas and ensure number
+    expenseObj.expenseAmount = Number(expenseAmount.replace(/,/g, ""));
+
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch("http://localhost:5000/api/expense", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(expenseObj),
+      });
+
+      const newExpense = await res.json();
+
+      onAddExpense({
+        id: newExpense.id,
+        date: new Date(newExpense.date).toISOString().split("T")[0],
+        description: newExpense.category,
+        amount: Number(newExpense.amount),
+        currency: "₦",
+        category: newExpense.category,
+        type: "expense",
+      });
+
+      e.target.reset();
+      setExpenseAmount("");
+      setOpen(false);
+    } catch (error) {
+      console.error("Failed to add expense", error);
+    }
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {/* Sidebar menu trigger */}
       <DialogTrigger asChild>
         <SidebarMenuItem>
           <SidebarMenuButton asChild>
             <div className="flex items-center gap-2 cursor-pointer">
-              <IconCirclePlusFilled className="w-5 h-5 text-red-600" />
+              <IconCirclePlusFilled className="w-5 h-5" />
               <span>Add Expense</span>
             </div>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </DialogTrigger>
 
-      {/* Dialog form */}
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add Expense</DialogTitle>
@@ -90,7 +78,7 @@ export function AddExpenseComponent({ onAddExpense }) {
           <input
             type="text"
             name="expenseName"
-            placeholder="What did you spend on?"
+            placeholder="Expense Name"
             required
             className="border p-2 rounded"
           />
@@ -101,9 +89,13 @@ export function AddExpenseComponent({ onAddExpense }) {
             required
             className="border p-2 rounded"
             value={expenseAmount}
-            onChange={handleAmountChange}
-            inputMode="decimal"
-            autoComplete="off"
+            onChange={(e) => {
+              let raw = e.target.value.replace(/,/g, "");
+              if (/^\d*\.?\d*$/.test(raw)) {
+                const formatted = raw.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                setExpenseAmount(formatted);
+              }
+            }}
           />
           <input
             type="date"
@@ -112,33 +104,16 @@ export function AddExpenseComponent({ onAddExpense }) {
             className="border p-2 rounded"
           />
           <select
-            name="currency"
-            required
-            className="border p-2 rounded"
-            value={currency}
-            onChange={handleCurrencyChange}
-          >
-            <option value="" disabled>
-              Select Currency
-            </option>
-            <option value="₦">₦ Naira</option>
-            <option value="$">$ Dollar</option>
-            <option value="€">€ Euro</option>
-          </select>
-          <select
             name="expenseCategory"
             required
             className="border p-2 rounded"
-            value={expenseCategory}
-            onChange={handleCategoryChange}
+            defaultValue=""
           >
             <option value="" disabled>
               Select Category
             </option>
             <option value="Food">Food</option>
             <option value="Transport">Transport</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Bills">Bills</option>
             <option value="Shopping">Shopping</option>
             <option value="Other">Other</option>
           </select>

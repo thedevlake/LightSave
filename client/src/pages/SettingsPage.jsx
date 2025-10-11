@@ -1,5 +1,11 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,48 +15,172 @@ import { Settings, User, Shield, LogOut } from "lucide-react";
 
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { Settings, User, Palette, Shield, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
-
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 function SettingsPage() {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  console.log("BASE_URL =", BASE_URL);
   const [userInfo, setUserInfo] = useState({
     firstName: "",
     lastName: "",
-
-    email: ""
-
     email: "",
-
   });
 
   const [passwordForm, setPasswordForm] = useState({
     oldPassword: "",
     newPassword: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
 
   const [showPasswordForm, setShowPasswordForm] = useState(false);
 
-  const handleSaveProfile = () => {
-    console.log("Saving profile:", userInfo);
-    // Here you would save to the backend
+  const [alert, setAlert] = useState(null); // { type: 'success' | 'error', title: string, description: string }
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setAlert({
+            type: "error",
+            title: "Authentication Error",
+            description: "No token found. Please log in again.",
+          });
+          return;
+        }
+        const res = await fetch(`${BASE_URL}/auth/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.message || "Failed to fetch user info");
+        }
+        const data = await res.json();
+        setUserInfo({
+          firstName: data.firstName || "",
+          lastName: data.lastName || "",
+          email: data.email || "",
+        });
+      } catch (error) {
+        setAlert({
+          type: "error",
+          title: "Error",
+          description: error.message || "Failed to fetch user info",
+        });
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
+  useEffect(() => {
+    if (alert) {
+      const timer = setTimeout(() => setAlert(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert]);
+
+  const handleSaveProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setAlert({
+          type: "error",
+          title: "Authentication Error",
+          description: "No token found. Please log in again.",
+        });
+        return;
+      }
+      const res = await fetch(`${BASE_URL}/auth/update`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(userInfo),
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to update profile");
+      }
+      setAlert({
+        type: "success",
+        title: "Success",
+        description: "Profile updated successfully!",
+      });
+    } catch (error) {
+      setAlert({
+        type: "error",
+        title: "Error",
+        description: error.message || "Failed to update profile",
+      });
+    }
   };
 
-  const handlePasswordChange = () => {
+  const handlePasswordChange = async () => {
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
-      alert("New passwords do not match!");
+      setAlert({
+        type: "error",
+        title: "Validation Error",
+        description: "New passwords do not match!",
+      });
       return;
     }
     if (passwordForm.newPassword.length < 6) {
-      alert("New password must be at least 6 characters long!");
+      setAlert({
+        type: "error",
+        title: "Validation Error",
+        description: "New password must be at least 6 characters long!",
+      });
       return;
     }
-    console.log("Changing password:", passwordForm);
-    // Here you would send to the backend
-    setPasswordForm({ oldPassword: "", newPassword: "", confirmPassword: "" });
-    setShowPasswordForm(false);
-    alert("Password updated successfully!");
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setAlert({
+          type: "error",
+          title: "Authentication Error",
+          description: "No token found. Please log in again.",
+        });
+        return;
+      }
+      const res = await fetch(`${BASE_URL}/auth/change-password`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          oldPassword: passwordForm.oldPassword,
+          newPassword: passwordForm.newPassword,
+        }),
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to change password");
+      }
+      setPasswordForm({
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+      setShowPasswordForm(false);
+      setAlert({
+        type: "success",
+        title: "Success",
+        description: "Password updated successfully!",
+      });
+    } catch (error) {
+      setAlert({
+        type: "error",
+        title: "Error",
+        description: error.message || "Failed to change password",
+      });
+    }
   };
 
   const handleCancelPassword = () => {
@@ -71,12 +201,25 @@ function SettingsPage() {
       className="min-h-screen bg-background p-6"
     >
       <div className="max-w-4xl mx-auto space-y-6">
+        {/* Alert */}
+        {alert && (
+          <Alert
+            variant={alert.type === "error" ? "destructive" : "default"}
+            className="mb-4"
+          >
+            <AlertTitle>{alert.title}</AlertTitle>
+            <AlertDescription>{alert.description}</AlertDescription>
+          </Alert>
+        )}
+
         {/* Header */}
         <div className="flex items-center gap-3">
           <Settings className="h-8 w-8 text-primary" />
           <div>
             <h1 className="text-3xl font-bold">Settings</h1>
-            <p className="text-muted-foreground">Manage your account and preferences</p>
+            <p className="text-muted-foreground">
+              Manage your account and preferences
+            </p>
           </div>
         </div>
 
@@ -98,31 +241,37 @@ function SettingsPage() {
                 <Input
                   id="firstName"
                   value={userInfo.firstName}
-                  onChange={(e) => setUserInfo({...userInfo, firstName: e.target.value})}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, firstName: e.target.value })
+                  }
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last Name</Label>
                 <Input
                   id="lastName"
                   value={userInfo.lastName}
-                  onChange={(e) => setUserInfo({...userInfo, lastName: e.target.value})}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, lastName: e.target.value })
+                  }
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
                   value={userInfo.email}
-                  onChange={(e) => setUserInfo({...userInfo, email: e.target.value})}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, email: e.target.value })
+                  }
                 />
               </div>
 
               <Separator />
-              
+
               <div className="flex gap-2">
                 <Button onClick={handleSaveProfile} className="flex-1">
                   Save Changes
@@ -148,7 +297,7 @@ function SettingsPage() {
                 <Label>Version</Label>
                 <p className="text-sm text-muted-foreground">1.0.0</p>
               </div>
-              
+
               <div className="space-y-2">
                 <Label>Last Updated</Label>
                 <p className="text-sm text-muted-foreground">
@@ -159,7 +308,9 @@ function SettingsPage() {
               <div className="space-y-2">
                 <Label>Description</Label>
                 <p className="text-sm text-muted-foreground">
-                  LightSave is a lightweight personal finance tracking application that helps you manage income, expenses, and savings goals with clear visual insights.
+                  LightSave is a lightweight personal finance tracking
+                  application that helps you manage income, expenses, and
+                  savings goals with clear visual insights.
                 </p>
               </div>
 
@@ -173,9 +324,9 @@ function SettingsPage() {
                   <li>• Responsive design</li>
                 </ul>
               </div>
-              
+
               <Separator />
-              
+
               <div className="space-y-2">
                 <Button variant="outline" className="w-full">
                   Export Data
@@ -205,8 +356,8 @@ function SettingsPage() {
               <div className="space-y-2">
                 <Label>Change Password</Label>
                 {!showPasswordForm ? (
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="w-full"
                     onClick={() => setShowPasswordForm(true)}
                   >
@@ -220,33 +371,50 @@ function SettingsPage() {
                         id="oldPassword"
                         type="password"
                         value={passwordForm.oldPassword}
-                        onChange={(e) => setPasswordForm({...passwordForm, oldPassword: e.target.value})}
+                        onChange={(e) =>
+                          setPasswordForm({
+                            ...passwordForm,
+                            oldPassword: e.target.value,
+                          })
+                        }
                         placeholder="Enter current password"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
                       <Label htmlFor="newPassword">New Password</Label>
                       <Input
                         id="newPassword"
                         type="password"
                         value={passwordForm.newPassword}
-                        onChange={(e) => setPasswordForm({...passwordForm, newPassword: e.target.value})}
+                        onChange={(e) =>
+                          setPasswordForm({
+                            ...passwordForm,
+                            newPassword: e.target.value,
+                          })
+                        }
                         placeholder="Enter new password"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                      <Label htmlFor="confirmPassword">
+                        Confirm New Password
+                      </Label>
                       <Input
                         id="confirmPassword"
                         type="password"
                         value={passwordForm.confirmPassword}
-                        onChange={(e) => setPasswordForm({...passwordForm, confirmPassword: e.target.value})}
+                        onChange={(e) =>
+                          setPasswordForm({
+                            ...passwordForm,
+                            confirmPassword: e.target.value,
+                          })
+                        }
                         placeholder="Confirm new password"
                       />
                     </div>
-                    
+
                     <div className="flex gap-2">
                       <Button onClick={handlePasswordChange} className="flex-1">
                         Update Password
@@ -258,9 +426,9 @@ function SettingsPage() {
                   </div>
                 )}
               </div>
-              
+
               <Separator />
-              
+
               <div className="space-y-2">
                 <Label>Two-Factor Authentication</Label>
                 <p className="text-sm text-muted-foreground">
@@ -272,7 +440,6 @@ function SettingsPage() {
               </div>
             </CardContent>
           </Card>
-
         </div>
       </div>
     </motion.div>

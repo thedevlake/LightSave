@@ -104,11 +104,10 @@ const login = async (req, res) => {
     }
     //Generate JWT
     const token = jwt.sign(
-      { userId: user.id, role: user.role },
+      { id: user.id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
-
     // 5. Return token
     return res.status(200).json({
       message: "Login successful",
@@ -145,4 +144,94 @@ const me = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-export { register, login, me };
+
+// Update user profile (firstname, lastname, email)
+const updateProfile = async (req, res) => {
+  try {
+    const userId = req.user.userId; // comes from authenticateToken middleware
+    const { firstname, lastname, email } = req.body;
+
+    if (!firstname || !lastname || !email) {
+      return res
+        .status(400)
+        .json({ message: "Firstname, lastname, and email are required" });
+    }
+
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ message: "Invalid email format" });
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: { firstname, lastname, email },
+    });
+
+    // ✅ Always send a JSON response
+    return res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      user: {
+        id: updatedUser.id,
+        firstname: updatedUser.firstname,
+        lastname: updatedUser.lastname,
+        email: updatedUser.email,
+      },
+    });
+  } catch (err) {
+    console.error("❌ Error updating profile:", err.message);
+    // ✅ Always respond with JSON, even on failure
+    return res
+      .status(500)
+      .json({ success: false, message: "Server error", error: err.message });
+  }
+};
+
+// Change password (needs old + new password)
+const changePassword = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { oldPassword, newPassword } = req.body;
+
+    if (!oldPassword || !newPassword) {
+      return res
+        .status(400)
+        .json({ message: "Both old and new passwords are required" });
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Old password is incorrect" });
+    }
+
+    if (!validator.isLength(newPassword, { min: 6 })) {
+      return res
+        .status(400)
+        .json({ message: "New password must be at least 6 characters" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: { password: hashedPassword },
+    });
+
+    // ✅ Always respond with JSON
+    return res
+      .status(200)
+      .json({ success: true, message: "Password updated successfully" });
+  } catch (err) {
+    console.error("❌ Error changing password:", err.message);
+    // ✅ Always return JSON, never empty response
+    return res
+      .status(500)
+      .json({ success: false, message: "Server error", error: err.message });
+  }
+};
+
+export { register, login, me, updateProfile, changePassword };
