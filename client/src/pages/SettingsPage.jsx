@@ -35,14 +35,16 @@ function SettingsPage() {
 
   const [showPasswordForm, setShowPasswordForm] = useState(false);
 
-  const [alert, setAlert] = useState(null); // { type: 'success' | 'error', title: string, description: string }
+  // Separate alerts for profile (account) and password sections
+  const [profileAlert, setProfileAlert] = useState(null); // { type: 'success' | 'error', title: string, description: string }
+  const [passwordAlert, setPasswordAlert] = useState(null);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
-          setAlert({
+          setProfileAlert({
             type: "error",
             title: "Authentication Error",
             description: "No token found. Please log in again.",
@@ -68,29 +70,35 @@ function SettingsPage() {
           email: data.email || "",
         });
       } catch (error) {
-        setAlert({
+        setProfileAlert({
           type: "error",
           title: "Error",
           description: error.message || "Failed to fetch user info",
         });
       }
     };
-
     fetchUserInfo();
   }, []);
 
+  // Dismiss alerts after 3 seconds
   useEffect(() => {
-    if (alert) {
-      const timer = setTimeout(() => setAlert(null), 3000);
+    if (profileAlert) {
+      const timer = setTimeout(() => setProfileAlert(null), 3000);
       return () => clearTimeout(timer);
     }
-  }, [alert]);
+  }, [profileAlert]);
+  useEffect(() => {
+    if (passwordAlert) {
+      const timer = setTimeout(() => setPasswordAlert(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [passwordAlert]);
 
   const handleSaveProfile = async () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        setAlert({
+        setProfileAlert({
           type: "error",
           title: "Authentication Error",
           description: "No token found. Please log in again.",
@@ -113,13 +121,13 @@ function SettingsPage() {
         const errorData = await res.json();
         throw new Error(errorData.message || "Failed to update profile");
       }
-      setAlert({
+      setProfileAlert({
         type: "success",
         title: "Success",
         description: "Profile updated successfully!",
       });
     } catch (error) {
-      setAlert({
+      setProfileAlert({
         type: "error",
         title: "Error",
         description: error.message || "Failed to update profile",
@@ -129,7 +137,7 @@ function SettingsPage() {
 
   const handlePasswordChange = async () => {
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
-      setAlert({
+      setPasswordAlert({
         type: "error",
         title: "Validation Error",
         description: "New passwords do not match!",
@@ -137,7 +145,7 @@ function SettingsPage() {
       return;
     }
     if (passwordForm.newPassword.length < 6) {
-      setAlert({
+      setPasswordAlert({
         type: "error",
         title: "Validation Error",
         description: "New password must be at least 6 characters long!",
@@ -148,7 +156,7 @@ function SettingsPage() {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        setAlert({
+        setPasswordAlert({
           type: "error",
           title: "Authentication Error",
           description: "No token found. Please log in again.",
@@ -176,13 +184,13 @@ function SettingsPage() {
         confirmPassword: "",
       });
       setShowPasswordForm(false);
-      setAlert({
+      setPasswordAlert({
         type: "success",
         title: "Success",
         description: "Password updated successfully!",
       });
     } catch (error) {
-      setAlert({
+      setPasswordAlert({
         type: "error",
         title: "Error",
         description: error.message || "Failed to change password",
@@ -208,17 +216,6 @@ function SettingsPage() {
       className="min-h-screen bg-background p-6"
     >
       <div className="max-w-4xl mx-auto space-y-6">
-        {/* Alert */}
-        {alert && (
-          <Alert
-            variant={alert.type === "error" ? "destructive" : "default"}
-            className="mb-4"
-          >
-            <AlertTitle>{alert.title}</AlertTitle>
-            <AlertDescription>{alert.description}</AlertDescription>
-          </Alert>
-        )}
-
         {/* Header */}
         <div className="flex items-center gap-3">
           <Settings className="h-8 w-8 text-primary" />
@@ -232,7 +229,7 @@ function SettingsPage() {
 
         <div className="grid gap-6 md:grid-cols-2">
           {/* Account Management */}
-          <Card>
+          <Card className={"bg-[#f0f0f0] dark:bg-white/10"}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <User className="h-5 w-5" />
@@ -243,6 +240,56 @@ function SettingsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
+              {/* Animated Profile Updated Alert */}
+              {profileAlert && (
+                <motion.div
+                  initial={{ opacity: 0, y: -20, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 25,
+                    duration: 0.4,
+                  }}
+                  key={profileAlert.type + profileAlert.title}
+                  className="mb-4"
+                >
+                  <Alert
+                    variant={
+                      profileAlert.type === "error" ? "destructive" : "default"
+                    }
+                    className={
+                      "rounded-md border px-4 py-2 shadow-sm" +
+                      (profileAlert.type === "success"
+                        ? " bg-green-100 border-green-400 dark:bg-green-900/30 dark:border-green-700"
+                        : "")
+                    }
+                  >
+                    <AlertTitle
+                      className={
+                        "font-semibold" +
+                        (profileAlert.type === "success"
+                          ? " text-green-800 dark:text-green-200"
+                          : "")
+                      }
+                    >
+                      {profileAlert.title}
+                    </AlertTitle>
+                    <AlertDescription
+                      className={
+                        "text-sm" +
+                        (profileAlert.type === "success"
+                          ? " text-green-700 dark:text-green-100"
+                          : "")
+                      }
+                    >
+                      {profileAlert.description}
+                    </AlertDescription>
+                  </Alert>
+                </motion.div>
+              )}
+
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name</Label>
                 <Input
@@ -360,6 +407,55 @@ function SettingsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
+              {/* Password section alert */}
+              {passwordAlert && (
+                <motion.div
+                  initial={{ opacity: 0, y: -20, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 25,
+                    duration: 0.4,
+                  }}
+                  key={passwordAlert.type + passwordAlert.title}
+                  className="mb-4"
+                >
+                  <Alert
+                    variant={
+                      passwordAlert.type === "error" ? "destructive" : "default"
+                    }
+                    className={
+                      "rounded-md border px-4 py-2 shadow-sm" +
+                      (passwordAlert.type === "success"
+                        ? " bg-green-100 border-green-400 dark:bg-green-900/30 dark:border-green-700"
+                        : "")
+                    }
+                  >
+                    <AlertTitle
+                      className={
+                        "font-semibold" +
+                        (passwordAlert.type === "success"
+                          ? " text-green-800 dark:text-green-200"
+                          : "")
+                      }
+                    >
+                      {passwordAlert.title}
+                    </AlertTitle>
+                    <AlertDescription
+                      className={
+                        "text-sm" +
+                        (passwordAlert.type === "success"
+                          ? " text-green-700 dark:text-green-100"
+                          : "")
+                      }
+                    >
+                      {passwordAlert.description}
+                    </AlertDescription>
+                  </Alert>
+                </motion.div>
+              )}
               <div className="space-y-2">
                 <Label>Change Password</Label>
                 {!showPasswordForm ? (
