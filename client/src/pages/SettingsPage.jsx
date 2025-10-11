@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "@tanstack/react-router";
 import {
   Card,
   CardContent,
@@ -20,6 +21,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 function SettingsPage() {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const router = useRouter();
   console.log("BASE_URL =", BASE_URL);
   const [userInfo, setUserInfo] = useState({
     firstName: "",
@@ -205,7 +207,7 @@ function SettingsPage() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    router.navigate({ to: "/login" });
   };
 
   return (
