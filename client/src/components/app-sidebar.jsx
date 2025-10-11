@@ -27,7 +27,12 @@ import { Link } from "@tanstack/react-router";
 
 const data = {
   navMain: [
-    { title: "Savings", url: "#", icon: IconListDetails },
+    {
+      title: "Savings Goals",
+      url: "/SavingGoals",
+      icon: IconListDetails,
+      isLink: true,
+    },
     { title: "Accounts", url: "#", icon: IconUsers },
   ],
   quickActions: [{ title: "Transfer Funds", url: "#", icon: IconTransfer }],
@@ -49,16 +54,16 @@ export function AppSidebar({ onAddIncome, onAddExpense, ...props }) {
             className="data-[slot=sidebar-menu-button]:!p-1.5"
           >
             <a href="#">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 ml-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="w-6 h-6 text-[#0D9488]"
+                  className="w-6 h-6 text-[#1d7f77]"
                 >
                   <path d="M12 2C6.48 2 2 3.79 2 6v2c0 2.21 4.48 4 10 4s10-1.79 10-4V6c0-2.21-4.48-4-10-4zm0 8c-5.52 0-10-1.79-10-4v4c0 2.21 4.48 4 10 4s10-1.79 10-4V6c0 2.21-4.48 4-10 4zm0 6c-5.52 0-10-1.79-10-4v4c0 2.21 4.48 4 10 4s10-1.79 10-4v-4c0 2.21-4.48 4-10 4z" />
                 </svg>
-                <span className="font-semibold text-base bg-gradient-to-r from-[#04520e] to-[#0D9488] dark:from-gray-200 dark:to-teal-400 bg-clip-text text-transparent">
+                <span className="font-semibold text-base bg-gradient-to-r from-[#04520e] to-[#63b8b1] dark:from-gray-100 dark:bg-[#727e7d] bg-clip-text text-transparent">
                   LightSave
                 </span>
               </div>

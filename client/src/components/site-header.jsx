@@ -15,7 +15,7 @@ export function SiteHeader() {
       });
       const data = await res.json();
       console.log("me response:", data);
-      setName(data.firstname); // ✅ clean and safe
+      setName(data.firstname); //
     }
 
     fetchProfile();
@@ -39,7 +39,16 @@ export function SiteHeader() {
           </h1>
         </div>
         <div className="ml-auto flex items-center gap-2">
-          <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
+          <Button
+            variant="ghost"
+            asChild
+            size="sm"
+            className="hidden sm:flex
+               bg-white/20 dark:bg-white/10
+               hover:bg-white/30 dark:hover:bg-white/20
+               rounded-md shadow-md dark:shadow-lg
+               transition-all duration-200 ease-in-out"
+          >
             <ModeToggle />
           </Button>
         </div>

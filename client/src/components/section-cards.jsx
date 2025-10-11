@@ -121,9 +121,30 @@ export function SectionCards({ totalIncome, totalExpenses }) {
             <Link
               to="/SavingGoals"
               aria-label="Navigate to Savings Goals"
-              className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-green-400 to-[#1b5e20] hover:scale-110 hover:shadow-lg transition-transform duration-300"
+              className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-black/50 to-[#148441] hover:scale-110 hover:shadow-lg transition-transform duration-300"
             >
-              <RefreshCcw className="animate-spin text-white" />
+              {/* Fintech style spinning circle */}
+              <svg
+                className="w-6 h-6 animate-spin text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
               <span className="sr-only">Loading</span>
             </Link>
           </CardAction>

@@ -16,15 +16,18 @@ import { IconCirclePlusFilled } from "@tabler/icons-react";
 export function AddIncomeComponent({ onAddIncome }) {
   const [open, setOpen] = useState(false);
   const [incomeAmount, setIncomeAmount] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSaving(true);
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
     const amount = parseFloat(incomeAmount.replace(/,/g, ""));
     if (isNaN(amount) || amount <= 0) {
       alert("Please enter a valid amount");
+      setIsSaving(false);
       return;
     }
 
@@ -40,6 +43,7 @@ export function AddIncomeComponent({ onAddIncome }) {
       const token = localStorage.getItem("token");
       if (!token) {
         alert("Authentication token is missing. Please log in.");
+        setIsSaving(false);
         return;
       }
       const res = await fetch("http://localhost:5050/income", {
@@ -66,10 +70,9 @@ export function AddIncomeComponent({ onAddIncome }) {
 
       const newIncome = await res.json();
 
-      // Format date and amount for TransactionPage
       const formattedIncome = {
         id: newIncome.id,
-        date: newIncome.date, // already valid ISO string
+        date: newIncome.date,
         description: newIncome.description,
         amount: newIncome.amount,
         category: newIncome.category,
@@ -85,8 +88,13 @@ export function AddIncomeComponent({ onAddIncome }) {
     } catch (err) {
       console.error("Error adding income:", err);
       alert("Error adding income: " + err.message);
+    } finally {
+      setIsSaving(false);
     }
   };
+
+  const inputClass =
+    "w-full p-3 rounded-lg border border-white/30 dark:border-white/20 backdrop-blur-md bg-white/40 dark:bg-white/10 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400/70 shadow-md transition-all";
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -94,89 +102,104 @@ export function AddIncomeComponent({ onAddIncome }) {
         <SidebarMenuItem>
           <SidebarMenuButton asChild>
             <div className="flex items-center gap-2 cursor-pointer">
-              <IconCirclePlusFilled className="w-5 h-5" />
-              <span>Add Income</span>
+              <IconCirclePlusFilled className="w-5 h-5 text-green-900" />
+              <span className="font-semibold text-green-900">Add Income</span>
             </div>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-md w-full">
         <DialogHeader>
-          <DialogTitle>Add Income</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-xl font-bold text-gray-800 dark:text-white">
+            Add Income
+          </DialogTitle>
+          <DialogDescription className="text-sm text-gray-600 dark:text-gray-300">
             Fill in the details below to add a new income entry.
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-          <input
-            type="text"
-            name="incomeSourceName"
-            placeholder="Source (e.g. Freelance)"
-            required
-            className="border p-2 rounded"
-          />
+        <form
+          onSubmit={handleSubmit}
+          className="backdrop-blur-xl bg-white/40 dark:bg-white/10 shadow-lg dark:shadow-md rounded-xl p-6 grid gap-4 transition-all"
+        >
+          <fieldset disabled={isSaving} className="grid gap-4">
+            <input
+              type="text"
+              name="incomeSourceName"
+              placeholder="Source (e.g. Freelance)"
+              required
+              className={inputClass}
+            />
+            <input
+              type="text"
+              name="incomeAmount"
+              placeholder="Amount"
+              required
+              value={incomeAmount}
+              onChange={(e) => {
+                const raw = e.target.value.replace(/,/g, "");
+                if (/^\d*\.?\d*$/.test(raw)) {
+                  const formatted = raw.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                  setIncomeAmount(formatted);
+                }
+              }}
+              className={inputClass}
+            />
+            <input
+              type="date"
+              name="incomeDate"
+              placeholder="YYYY-MM-DD"
+              required
+              className={inputClass}
+            />
+            <select
+              name="currency"
+              required
+              defaultValue=""
+              className={inputClass}
+            >
+              <option value="" disabled>
+                Select Currency
+              </option>
+              <option value="₦">₦ Naira</option>
+              <option value="$">$ Dollar</option>
+              <option value="€">€ Euro</option>
+            </select>
+            <select
+              name="incomeCategory"
+              required
+              defaultValue=""
+              className={inputClass}
+            >
+              <option value="" disabled>
+                Select Category
+              </option>
+              <option value="Salary">Salary</option>
+              <option value="Gift">Gift</option>
+              <option value="Business">Business</option>
+              <option value="Other">Other</option>
+            </select>
+          </fieldset>
 
-          <input
-            type="text"
-            name="incomeAmount"
-            placeholder="Amount"
-            required
-            className="border p-2 rounded"
-            value={incomeAmount}
-            onChange={(e) => {
-              const raw = e.target.value.replace(/,/g, "");
-              if (/^\d*\.?\d*$/.test(raw)) {
-                const formatted = raw.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                setIncomeAmount(formatted);
-              }
-            }}
-          />
-
-          <input
-            type="date"
-            name="incomeDate"
-            required
-            className="border p-2 rounded"
-          />
-
-          <select
-            name="currency"
-            required
-            className="border p-2 rounded"
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Select Currency
-            </option>
-            <option value="₦">₦ Naira</option>
-            <option value="$">$ Dollar</option>
-            <option value="€">€ Euro</option>
-          </select>
-
-          <select
-            name="incomeCategory"
-            required
-            className="border p-2 rounded"
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Select Category
-            </option>
-            <option value="Salary">Salary</option>
-            <option value="Gift">Gift</option>
-            <option value="Business">Business</option>
-            <option value="Other">Other</option>
-          </select>
-
-          <DialogFooter className="flex gap-2">
+          <DialogFooter className="flex flex-col sm:flex-row gap-3 mt-2">
             <DialogClose asChild>
-              <Button type="button" variant="outline">
+              <Button
+                type="button"
+                variant="outline"
+                disabled={isSaving}
+                className="w-full sm:w-auto"
+              >
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit">Save</Button>
+            <Button
+              type="submit"
+              disabled={isSaving}
+              className="w-full sm:w-auto"
+            >
+              {isSaving ? "Saving..." : "Save"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
