@@ -3,11 +3,11 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import validator from "validator"; // needed for email validation
 
+// REGISTER
 const register = async (req, res) => {
   try {
     const { firstname, lastname, email, password } = req.body;
 
-    // 1. Validate inputs
     if (!firstname || !lastname || !email || !password) {
       return res.status(400).json({
         error: true,
@@ -28,7 +28,6 @@ const register = async (req, res) => {
       });
     }
 
-    // 2. Check if user exists
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       return res
@@ -36,41 +35,37 @@ const register = async (req, res) => {
         .json({ error: true, message: "Email already in use" });
     }
 
-    // 3. Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 4. Create user
     const newUser = await prisma.user.create({
       data: {
         firstname,
         lastname,
         email,
         password: hashedPassword,
-        role: "USER", // default role
+        role: "USER",
       },
     });
 
-    // 5. Generate JWT
     const token = jwt.sign(
-      { userId: newUser.id, role: newUser.role },
+      { id: newUser.id, role: newUser.role }, // ✅ consistent structure
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
 
-    // 6. Return response
     return res.status(201).json({
       message: "Success!",
+      token,
       user: {
         id: newUser.id,
         firstname: newUser.firstname,
         lastname: newUser.lastname,
         email: newUser.email,
         role: newUser.role,
-        token,
       },
     });
   } catch (err) {
-    console.error(err);
+    console.error("❌ Register error:", err.message);
     return res
       .status(500)
       .json({ message: "Server error", error: err.message });
@@ -129,11 +124,14 @@ const login = async (req, res) => {
 const me = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
-      where: { id: req.user.userId },
+      where: { id: req.user.id }, // ✅ Fix: use req.user.id, not userId
     });
-    if (!user) return res.status(404).json({ message: "User not found" });
 
-    return res.json({
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({
       id: user.id,
       firstname: user.firstname,
       lastname: user.lastname,
@@ -141,14 +139,17 @@ const me = async (req, res) => {
       role: user.role,
     });
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    console.error("❌ Error in /auth/me:", err.message);
+    return res
+      .status(500)
+      .json({ message: "Server error", error: err.message });
   }
 };
 
 // Update user profile (firstname, lastname, email)
 const updateProfile = async (req, res) => {
   try {
-    const userId = req.user.userId; // comes from authenticateToken middleware
+    const userId = req.user.id; // comes from authenticateToken middleware
     const { firstname, lastname, email } = req.body;
 
     if (!firstname || !lastname || !email) {
@@ -189,7 +190,7 @@ const updateProfile = async (req, res) => {
 // Change password (needs old + new password)
 const changePassword = async (req, res) => {
   try {
-    const userId = req.user.userId;
+    const userId = req.user.id;
     const { oldPassword, newPassword } = req.body;
 
     if (!oldPassword || !newPassword) {
