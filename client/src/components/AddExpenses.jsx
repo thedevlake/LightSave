@@ -25,25 +25,27 @@ export function AddExpenseComponent({ onAddExpense }) {
     const expenseCategory = formData.get("expenseCategory");
     const rawAmount = expenseAmount.replace(/,/g, "");
 
-    // ✅ validate before sending
+    // Validate input
     if (!expenseName || !expenseDate || !expenseCategory || !rawAmount) {
       alert("Please fill in all fields correctly");
       return;
     }
 
-    const amount = parseFloat(rawAmount);
-    if (isNaN(amount)) {
+    const expenseAmountNumber = parseFloat(rawAmount);
+    if (isNaN(expenseAmountNumber) || expenseAmountNumber <= 0) {
       alert("Invalid amount entered");
       return;
     }
 
     const payload = {
       expenseName,
-      amount,
-      date: expenseDate, // already YYYY-MM-DD
-      category: expenseCategory,
-      currency: "₦",
+      expenseAmount: expenseAmountNumber,
+      expenseDate, // YYYY-MM-DD format
+      expenseCategory,
+      currency: "₦", // default
     };
+
+    console.log("Submitting payload:", payload); // Debug: check payload
 
     try {
       const token = localStorage.getItem("token");
@@ -61,6 +63,7 @@ export function AddExpenseComponent({ onAddExpense }) {
       const response = await res.json();
       if (!res.ok) throw new Error(response.message || "Failed to add expense");
 
+      // Add to frontend state
       onAddExpense({
         id: response.id,
         date: new Date(response.date).toLocaleDateString(),
@@ -71,6 +74,7 @@ export function AddExpenseComponent({ onAddExpense }) {
         type: "expense",
       });
 
+      // Reset form
       e.target.reset();
       setExpenseAmount("");
       setOpen(false);

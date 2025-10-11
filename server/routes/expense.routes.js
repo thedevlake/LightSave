@@ -8,6 +8,7 @@ const router = express.Router();
 // POST new expense
 // POST new expense (debug version)
 router.post("/", authenticateToken, async (req, res) => {
+  console.log("Received expense payload:", req.body);
   try {
     const {
       expenseName,
