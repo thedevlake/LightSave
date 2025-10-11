@@ -102,12 +102,14 @@ function LoginPage() {
       {/* Frosted glass overlay */}
       <div className="absolute inset-0 z-0 backdrop-blur-xl bg-white/30 dark:bg-black/40" />
 
-      <Aurora
-        colorStops={["#1b5e20", "#bbf7d0", "#34d399", "#0d9488", "#134e4a"]}
-        blend={1.5}
-        amplitude={1.0}
-        speed={1.93}
-      />
+      <div className="absolute inset-0 z-0 opacity-60">
+        <Aurora
+          colorStops={["#ffffff", "#bbf7d0", "#34d399", "#0d9488", "#134e4a"]}
+          blend={1.5}
+          amplitude={1.0}
+          speed={1.93}
+        />
+      </div>
 
       <div className="flex flex-col items-center w-full max-w-lg gap-6 sm:gap-8 md:gap-10 z-10 px-4 sm:px-6">
         <div className="text-center space-y-4">

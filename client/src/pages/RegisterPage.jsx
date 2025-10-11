@@ -132,11 +132,11 @@ function RegisterPage() {
         />
       </div>
 
-      <div className="flex flex-col items-center w-full max-w-sm sm:max-w-md md:max-w-lg gap-8 sm:gap-12 z-10">
+      <div className="flex flex-col items-center w-full max-w-sm sm:max-w-md md:max-w-lg gap-8 sm:gap-12 z-10 px-4 sm:px-6 md:px-0">
         <div className="text-center space-y-4">
           <h1>
             <span
-              className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent drop-shadow-lg"
+              className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent drop-shadow-lg break-words"
               style={{
                 backgroundImage:
                   "linear-gradient(90deg, #134e4a 0%, #0d9488 80%, #34d399 60%, #bbf7d0 85%, #ffffff 100%)",
@@ -145,18 +145,18 @@ function RegisterPage() {
               LightSave
             </span>
           </h1>
-          <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 max-w-md mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-200 max-w-md mx-auto leading-relaxed break-words">
             Helping you make smarter financial decisions with ease and clarity.
           </p>
         </div>
 
         <form
-          className="bg-[#f8f5f0] dark:bg-[#0d1b1b]/90 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-xl dark:border-none border border-gray-100/90 dark:border-gray-700 shadow-xl shadow-emerald-600/40 w-full max-w-xs sm:max-w-md "
+          className="bg-[#f8f5f0] dark:bg-[#0d1b1b]/90 backdrop-blur-xl p-4 sm:p-6 md:p-10 rounded-xl dark:border-none border border-gray-100/90 dark:border-gray-700 shadow-xl shadow-emerald-600/40 w-full max-w-full sm:max-w-md"
           onSubmit={handleRegister}
         >
-          <h2 className="text-xl sm:text-2xl font-medium mb-4 sm:mb-6 text-center">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-medium mb-4 sm:mb-6 text-center break-words">
             Get Started
-            <span className="text-gray-400 text-sm block font-normal mt-1">
+            <span className="text-gray-400 text-xs sm:text-sm block font-normal mt-1 break-words">
               Create your account securely
             </span>
           </h2>
@@ -164,7 +164,7 @@ function RegisterPage() {
           {error && (
             <Alert
               variant="destructive"
-              className="mb-4 dark:bg-muted-foreground dark:border-red-100"
+              className="mb-4 dark:bg-muted-foreground dark:border-red-100 break-words"
             >
               <AlertCircleIcon />
               <AlertTitle>Validation Error!</AlertTitle>
@@ -174,7 +174,7 @@ function RegisterPage() {
           {success && (
             <Alert
               variant="success"
-              className="mb-4 border-green-500 bg-green-50 dark:bg-teal-900/30 dark:border-green-600 dark:text-green-100"
+              className="mb-4 border-green-500 bg-green-50 dark:bg-teal-900/30 dark:border-green-600 dark:text-green-100 break-words"
             >
               <CheckCircleIcon className="text-green-600" />
               <AlertTitle>You've been registered Successfully</AlertTitle>
@@ -186,7 +186,7 @@ function RegisterPage() {
             <div>
               <label
                 htmlFor="firstname"
-                className="block mb-1 text-md font-medium dark:text-gray-200"
+                className="block mb-1 text-sm sm:text-md font-medium dark:text-gray-200 break-words"
               >
                 First Name
               </label>
@@ -196,14 +196,14 @@ function RegisterPage() {
                 placeholder="Enter your first name"
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
-                className="w-full p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition"
+                className="w-full p-2 sm:p-2.5 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition break-words"
               />
             </div>
 
             <div>
               <label
                 htmlFor="lastname"
-                className="block mb-1 text-md font-medium dark:text-gray-200"
+                className="block mb-1 text-sm sm:text-md font-medium dark:text-gray-200 break-words"
               >
                 Last Name
               </label>
@@ -213,14 +213,14 @@ function RegisterPage() {
                 placeholder="Enter your last name"
                 value={lastname}
                 onChange={(e) => setLastname(e.target.value)}
-                className="w-full p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition"
+                className="w-full p-2 sm:p-2.5 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition break-words"
               />
             </div>
 
             <div>
               <label
                 htmlFor="email"
-                className="block mb-1 text-md font-medium dark:text-gray-200"
+                className="block mb-1 text-sm sm:text-md font-medium dark:text-gray-200 break-words"
               >
                 Email
               </label>
@@ -230,14 +230,14 @@ function RegisterPage() {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition "
+                className="w-full p-2 sm:p-2.5 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition break-words"
               />
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className="block mb-1 text-md font-medium dark:text-gray-200"
+                className="block mb-1 text-sm sm:text-md font-medium dark:text-gray-200 break-words"
               >
                 Password
               </label>
@@ -247,14 +247,14 @@ function RegisterPage() {
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition "
+                className="w-full p-2 sm:p-2.5 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition break-words"
               />
             </div>
 
             <div>
               <label
                 htmlFor="confirmPassword"
-                className="block mb-1 text-md font-medium dark:text-gray-200"
+                className="block mb-1 text-sm sm:text-md font-medium dark:text-gray-200 break-words"
               >
                 Confirm Password
               </label>
@@ -264,7 +264,7 @@ function RegisterPage() {
                 placeholder="Confirm your password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition "
+                className="w-full p-2 sm:p-2.5 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition break-words"
               />
             </div>
           </div>
@@ -276,7 +276,7 @@ function RegisterPage() {
             Register
           </button>
 
-          <p className="text-sm text-center mt-4">
+          <p className="text-xs sm:text-sm text-center mt-4 break-words">
             Already have an account?{" "}
             <Link
               to="/login"
@@ -286,13 +286,13 @@ function RegisterPage() {
             </Link>
           </p>
         </form>
-        <div className="absolute bottom-4 sm:bottom-6 text-center px-4 text-gray-600 dark:text-gray-400 text-[10px] sm:text-xs leading-relaxed">
+        <div className="text-center px-4 text-gray-600 dark:text-gray-400 text-[10px] sm:text-sm md:text-base leading-relaxed">
           By clicking continue, you agree to our{" "}
-          <a className="border-b border-gray-400 dark:border-gray-600 hover:text-[#3dc794] dark:hover:text-emerald-300 transition-colors cursor-pointer">
+          <a className="border-b border-gray-400 dark:border-gray-600 hover:text-[#5a7d70] dark:hover:text-emerald-300 transition-colors cursor-pointer">
             Terms of Service
           </a>{" "}
           and{" "}
-          <a className="border-b border-gray-400 dark:border-gray-600 hover:text-[#3dc794] dark:hover:text-emerald-300 transition-colors cursor-pointer">
+          <a className="border-b border-gray-400 dark:border-gray-600 hover:text-[#5a7d70] dark:hover:text-emerald-300 transition-colors cursor-pointer">
             Privacy Policy
           </a>
         </div>
