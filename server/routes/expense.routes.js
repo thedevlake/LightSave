@@ -33,6 +33,7 @@ router.post("/", authenticateToken, async (req, res) => {
     const newExpense = await prisma.expense.create({
       data: {
         userId: req.user.id,
+        name: expenseName,
         category: expenseCategory,
         amount: parsedAmount,
         date: parsedDate,

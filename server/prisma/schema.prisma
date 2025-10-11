@@ -52,10 +52,11 @@ model Income {
 model Expense {
   id        String   @id @map("_id") @default(auto()) @db.ObjectId
   userId    String   @db.ObjectId
+  name      String           
   category  String
   amount    Float
   date      DateTime @default(now())
-  currency  String   @default("₦")   // <--- add this line
+  currency  String   @default("₦")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
