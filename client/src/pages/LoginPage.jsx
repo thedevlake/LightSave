@@ -135,7 +135,7 @@ function LoginPage() {
           className="bg-white dark:bg-[#0d1b1b]/90 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-lg shadow-xl border-gray-100/90 dark:border-gray-700 shadow-emerald-600/40 w-full max-w-xs sm:max-w-sm md:max-w-md h-auto sm:h-[500px] md:h-auto "
           onSubmit={handleLogin}
         >
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-medium mb-6 text-center">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-6 text-center">
             Welcome Back!{" "}
             <span className="text-xs sm:text-sm md:text-base block text-gray-400 dark:text-gray-300 font-normal">
               Let's get you signed in securely

@@ -165,7 +165,7 @@ function RegisterPage() {
             <CardTitle className="text-lg sm:text-xl md:text-2xl font-semibold">
               Get Started
             </CardTitle>
-            <CardDescription className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
+            <CardDescription className="text-xs sm:text-sm md:text-base block text-gray-400 dark:text-gray-300 font-normal ">
               Create your account securely
             </CardDescription>
           </CardHeader>
@@ -300,7 +300,6 @@ function RegisterPage() {
             </CardFooter>
           </form>
         </Card>
-
         <div className="text-center px-4 text-gray-600 dark:text-gray-400 text-[10px] sm:text-sm md:text-base leading-relaxed">
           By clicking continue, you agree to our{" "}
           <a className="border-b border-gray-400 dark:border-gray-600 hover:text-[#5a7d70] dark:hover:text-emerald-300 transition-colors cursor-pointer">
