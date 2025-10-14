@@ -75,7 +75,7 @@ function LoginPage() {
         setSuccess(data.message);
         setTimeout(() => {
           router.navigate({ to: "/dashboard" });
-        }, 3000);
+        }, 2000);
       }, 2000);
 
       setEmail("");

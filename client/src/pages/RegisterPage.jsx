@@ -3,6 +3,14 @@ import Aurora from "@/components/Aurora";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircleIcon, CheckCircleIcon, LoaderCircle } from "lucide-react";
 import { Link, useRouter } from "@tanstack/react-router";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 
 function RegisterPage() {
   const [firstname, setFirstname] = useState("");
@@ -114,7 +122,7 @@ function RegisterPage() {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center h-screen font-raleway bg-gradient-to-tr from-[#04520e] via-[#e5ded2] to-[#04520e] dark:from-black dark:via-[#0f2f2f] dark:to-black transition-all duration-700 ease-in-out ${isVisible ? "opacity-100" : "opacity-50"}`}
+      className={`flex flex-col items-center justify-start sm:justify-center min-h-screen py-6 overflow-y-auto font-raleway bg-gradient-to-tr from-[#04520e] via-[#e5ded2] to-[#04520e] dark:from-black dark:via-[#0f2f2f] dark:to-black transition-all duration-700 ease-in-out ${isVisible ? "opacity-100" : "opacity-50"}`}
     >
       <div className="absolute top-4 left-4 z-20 text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">
         Powered by{" "}
@@ -132,7 +140,7 @@ function RegisterPage() {
         />
       </div>
 
-      <div className="flex flex-col items-center w-full max-w-sm sm:max-w-md md:max-w-lg gap-8 sm:gap-12 z-10 px-4 sm:px-6 md:px-0">
+      <div className="flex flex-col items-center w-full max-w-sm sm:max-w-md md:max-w-lg gap-4 sm:gap-8 z-10 px-4 sm:px-6 md:px-0">
         <div className="text-center space-y-4">
           <h1>
             <span
@@ -150,142 +158,147 @@ function RegisterPage() {
           </p>
         </div>
 
-        <form
-          className="bg-[#f8f5f0] dark:bg-[#0d1b1b]/90 backdrop-blur-xl p-4 sm:p-6 md:p-10 rounded-xl dark:border-none border border-gray-100/90 dark:border-gray-700 shadow-xl shadow-emerald-600/40 w-full max-w-full sm:max-w-md"
-          onSubmit={handleRegister}
-        >
-          <h2 className="text-lg sm:text-xl md:text-2xl font-medium mb-4 sm:mb-6 text-center break-words">
-            Get Started
-            <span className="text-gray-400 text-xs sm:text-sm block font-normal mt-1 break-words">
+        <Card className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg max-h-[85vh] overflow-y-auto bg-[#f8f5f0]/90 dark:bg-[#0d1b1b]/90 backdrop-blur-xl border border-gray-100/90 dark:border-gray-700 shadow-xl shadow-emerald-600/40">
+          <CardHeader className="text-center">
+            <CardTitle className="text-lg sm:text-xl md:text-2xl font-semibold">
+              Get Started
+            </CardTitle>
+            <CardDescription className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
               Create your account securely
-            </span>
-          </h2>
+            </CardDescription>
+          </CardHeader>
 
-          {error && (
-            <Alert
-              variant="destructive"
-              className="mb-4 dark:bg-muted-foreground dark:border-red-100 break-words"
-            >
-              <AlertCircleIcon />
-              <AlertTitle>Validation Error!</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-          {success && (
-            <Alert
-              variant="success"
-              className="mb-4 border-green-500 bg-green-50 dark:bg-teal-900/30 dark:border-green-600 dark:text-green-100 break-words"
-            >
-              <CheckCircleIcon className="text-green-600" />
-              <AlertTitle>You've been registered Successfully</AlertTitle>
-              <AlertDescription>{success}</AlertDescription>
-            </Alert>
-          )}
+          <form onSubmit={handleRegister}>
+            <CardContent className="space-y-4">
+              {error && (
+                <Alert
+                  variant="destructive"
+                  className="mb-2 dark:bg-muted-foreground dark:border-red-100"
+                >
+                  <AlertCircleIcon />
+                  <AlertTitle>Validation Error!</AlertTitle>
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+              {success && (
+                <Alert
+                  variant="success"
+                  className="mb-2 border-green-500 bg-green-50 dark:bg-teal-900/30 dark:border-green-600 dark:text-green-100"
+                >
+                  <CheckCircleIcon className="text-green-600" />
+                  <AlertTitle>Registered Successfully</AlertTitle>
+                  <AlertDescription>{success}</AlertDescription>
+                </Alert>
+              )}
 
-          <div className="space-y-4">
-            <div>
-              <label
-                htmlFor="firstname"
-                className="block mb-1 text-sm sm:text-md font-medium dark:text-gray-200 break-words"
+              <div className="space-y-4">
+                <div className="flex flex-col space-y-1">
+                  <label
+                    htmlFor="firstname"
+                    className="block text-sm font-medium dark:text-gray-200 text-left"
+                  >
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    id="firstname"
+                    value={firstname}
+                    onChange={(e) => setFirstname(e.target.value)}
+                    placeholder="Enter your first name"
+                    className="w-full p-1.5 sm:p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent outline-none"
+                  />
+                </div>
+
+                <div className="flex flex-col space-y-1">
+                  <label
+                    htmlFor="lastname"
+                    className="block text-sm font-medium dark:text-gray-200 text-left"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    id="lastname"
+                    value={lastname}
+                    onChange={(e) => setLastname(e.target.value)}
+                    placeholder="Enter your last name"
+                    className="w-full p-1.5 sm:p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent outline-none"
+                  />
+                </div>
+
+                <div className="flex flex-col space-y-1">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium dark:text-gray-200 text-left"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full p-1.5 sm:p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent outline-none"
+                  />
+                </div>
+
+                <div className="flex flex-col space-y-1">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium dark:text-gray-200 text-left"
+                  >
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password"
+                    className="w-full p-1.5 sm:p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent outline-none"
+                  />
+                </div>
+
+                <div className="flex flex-col space-y-1">
+                  <label
+                    htmlFor="confirmPassword"
+                    className="block text-sm font-medium dark:text-gray-200 text-left"
+                  >
+                    Confirm Password
+                  </label>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Confirm your password"
+                    className="w-full p-1.5 sm:p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent outline-none"
+                  />
+                </div>
+              </div>
+            </CardContent>
+
+            <CardFooter className="flex flex-col space-y-4">
+              <button
+                type="submit"
+                className="bg-[#0d9488] dark:bg-emerald-600 text-white w-full p-2 rounded-lg hover:bg-[#134e4a] dark:hover:bg-emerald-700 transition-colors"
               >
-                First Name
-              </label>
-              <input
-                type="text"
-                id="firstname"
-                placeholder="Enter your first name"
-                value={firstname}
-                onChange={(e) => setFirstname(e.target.value)}
-                className="w-full p-2 sm:p-2.5 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition break-words"
-              />
-            </div>
+                Register
+              </button>
+              <p className="text-xs sm:text-sm text-center">
+                Already have an account?{" "}
+                <Link
+                  to="/login"
+                  className="text-[#0d9488] dark:text-emerald-400 hover:text-[#34d399]"
+                >
+                  Log in
+                </Link>
+              </p>
+            </CardFooter>
+          </form>
+        </Card>
 
-            <div>
-              <label
-                htmlFor="lastname"
-                className="block mb-1 text-sm sm:text-md font-medium dark:text-gray-200 break-words"
-              >
-                Last Name
-              </label>
-              <input
-                type="text"
-                id="lastname"
-                placeholder="Enter your last name"
-                value={lastname}
-                onChange={(e) => setLastname(e.target.value)}
-                className="w-full p-2 sm:p-2.5 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition break-words"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="email"
-                className="block mb-1 text-sm sm:text-md font-medium dark:text-gray-200 break-words"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-2 sm:p-2.5 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition break-words"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="password"
-                className="block mb-1 text-sm sm:text-md font-medium dark:text-gray-200 break-words"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-2 sm:p-2.5 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition break-words"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="confirmPassword"
-                className="block mb-1 text-sm sm:text-md font-medium dark:text-gray-200 break-words"
-              >
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                placeholder="Confirm your password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full p-2 sm:p-2.5 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent text-gray-900 dark:text-gray-100 outline-none transition break-words"
-              />
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            className="bg-[#0d9488] dark:bg-emerald-600 text-white dark:hover:bg-emerald-700 mt-7 w-full p-2 rounded-lg hover:bg-[#134e4a] transition-colors"
-          >
-            Register
-          </button>
-
-          <p className="text-xs sm:text-sm text-center mt-4 break-words">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="text-[#0d9488] dark:text-emerald-400 hover:text-[#34d399] dark:hover:text-emerald-300"
-            >
-              Log in
-            </Link>
-          </p>
-        </form>
         <div className="text-center px-4 text-gray-600 dark:text-gray-400 text-[10px] sm:text-sm md:text-base leading-relaxed">
           By clicking continue, you agree to our{" "}
           <a className="border-b border-gray-400 dark:border-gray-600 hover:text-[#5a7d70] dark:hover:text-emerald-300 transition-colors cursor-pointer">
