@@ -118,7 +118,8 @@ function LoginPage() {
               className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent drop-shadow-lg"
               style={{
                 backgroundImage:
-                  "linear-gradient(200deg, #134e4a 0%, #0d9488 80%, #34d399 30%, #134e4a 65%, #134e4a 100%)",
+                  "linear-gradient(220deg, #a7f3d0 0%, #34d399 25%, #10b981 50%, #0d9488 75%, #064e3b 100%)",
+                textShadow: "0 0 15px rgba(16, 185, 129, 0.5)",
               }}
             >
               LightSave
