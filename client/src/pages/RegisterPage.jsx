@@ -108,7 +108,6 @@ function RegisterPage() {
       setPassword("");
       setConfirmPassword("");
 
-      // Show spinner for 2 seconds, then show success message
       setTimeout(() => {
         setIsLoading(false);
         setSuccess(data.message);
@@ -122,7 +121,7 @@ function RegisterPage() {
 
   return (
     <div
-      className={`flex flex-col items-center justify-start sm:justify-center min-h-screen py-6 overflow-y-auto font-raleway bg-gradient-to-tr from-[#04520e] via-[#e5ded2] to-[#04520e] dark:from-black dark:via-[#0f2f2f] dark:to-black transition-all duration-700 ease-in-out ${isVisible ? "opacity-100" : "opacity-50"}`}
+      className={`flex flex-col items-center justify-center w-full min-h-[100dvh] px-4 sm:px-6 py-8 sm:py-10 font-raleway bg-gradient-to-tr from-[#04520e] via-[#e5ded2] to-[#04520e] dark:from-black dark:via-[#0f2f2f] dark:to-black overflow-x-hidden transition-all duration-700 ease-in-out ${isVisible ? "opacity-100" : "opacity-0"}`}
     >
       <div className="absolute top-4 left-4 z-20 text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">
         Powered by{" "}
@@ -130,35 +129,37 @@ function RegisterPage() {
           TheFifthLab
         </span>
       </div>
-      <div className="absolute inset-0 z-0 backdrop-blur-xl bg-white/30 dark:bg-black/40" />
-      <div className="absolute inset-0 z-0 opacity-40 sm:opacity-60 h-full w-full overflow-hidden">
+      {/* <div className="absolute inset-0 z-0 backdrop-blur-xl bg-white/30 dark:bg-black/40" /> */}
+      <div className="absolute inset-0 z-0 h-full w-full overflow-hidden">
         <Aurora
           colorStops={["#ffffff", "#bbf7d0", "#34d399", "#0d9488", "#134e4a"]}
           blend={1.5}
           amplitude={0.8}
           speed={1.5}
+          className="absolute inset-0 h-full w-full"
         />
+        <div className="absolute inset-0 bg-white/20 dark:bg-black/40 backdrop-blur-xl" />
       </div>
 
-      <div className="flex flex-col items-center w-full max-w-sm sm:max-w-md md:max-w-lg gap-4 sm:gap-8 z-10 px-4 sm:px-6 md:px-0">
+      <div className="flex flex-col items-center justify-center w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto gap-6 sm:gap-8 md:gap-10 px-4 sm:px-8 md:px-0 z-10">
         <div className="text-center space-y-4">
           <h1>
             <span
-              className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent drop-shadow-lg break-words"
+              className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent drop-shadow-lg break-words"
               style={{
                 backgroundImage:
-                  "linear-gradient(90deg, #134e4a 0%, #0d9488 80%, #34d399 60%, #bbf7d0 85%, #ffffff 100%)",
+                  "linear-gradient(200deg, #134e4a 0%, #0d9488 80%, #34d399 30%, #134e4a 65%, #134e4a 100%)",
               }}
             >
               LightSave
             </span>
           </h1>
-          <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-200 max-w-md mx-auto leading-relaxed break-words">
+          <p className="text-xs sm:text-sm md:text-base text-gray-700 dark:text-gray-200 max-w-md mx-auto leading-relaxed break-words">
             Helping you make smarter financial decisions with ease and clarity.
           </p>
         </div>
 
-        <Card className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg max-h-[85vh] overflow-y-auto bg-[#f8f5f0]/90 dark:bg-[#0d1b1b]/90 backdrop-blur-xl border border-gray-100/90 dark:border-gray-700 shadow-xl shadow-emerald-600/40">
+        <Card className="w-full bg-[#f8f5f0]/90 dark:bg-[#0d1b1b]/90 backdrop-blur-xl border border-gray-100/90 dark:border-gray-700 shadow-xl shadow-emerald-600/40 rounded-xl sm:rounded-2xl px-4 sm:px-6 py-6 sm:py-8">
           <CardHeader className="text-center">
             <CardTitle className="text-lg sm:text-xl md:text-2xl font-semibold">
               Get Started
@@ -192,10 +193,10 @@ function RegisterPage() {
               )}
 
               <div className="space-y-4">
-                <div className="flex flex-col space-y-1">
+                <div className="flex flex-col">
                   <label
                     htmlFor="firstname"
-                    className="block text-sm font-medium dark:text-gray-200 text-left"
+                    className="block text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200 mb-1"
                   >
                     First Name
                   </label>
@@ -205,14 +206,14 @@ function RegisterPage() {
                     value={firstname}
                     onChange={(e) => setFirstname(e.target.value)}
                     placeholder="Enter your first name"
-                    className="w-full p-1.5 sm:p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent outline-none"
+                    className="w-full p-2 sm:p-3 text-sm sm:text-base border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-transparent text-gray-900 dark:text-gray-100 transition"
                   />
                 </div>
 
-                <div className="flex flex-col space-y-1">
+                <div className="flex flex-col">
                   <label
                     htmlFor="lastname"
-                    className="block text-sm font-medium dark:text-gray-200 text-left"
+                    className="block text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200 mb-1"
                   >
                     Last Name
                   </label>
@@ -222,14 +223,14 @@ function RegisterPage() {
                     value={lastname}
                     onChange={(e) => setLastname(e.target.value)}
                     placeholder="Enter your last name"
-                    className="w-full p-1.5 sm:p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent outline-none"
+                    className="w-full p-2 sm:p-3 text-sm sm:text-base border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-transparent text-gray-900 dark:text-gray-100 transition"
                   />
                 </div>
 
-                <div className="flex flex-col space-y-1">
+                <div className="flex flex-col">
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium dark:text-gray-200 text-left"
+                    className="block text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200 mb-1"
                   >
                     Email
                   </label>
@@ -239,14 +240,14 @@ function RegisterPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="w-full p-1.5 sm:p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent outline-none"
+                    className="w-full p-2 sm:p-3 text-sm sm:text-base border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-transparent text-gray-900 dark:text-gray-100 transition"
                   />
                 </div>
 
-                <div className="flex flex-col space-y-1">
+                <div className="flex flex-col">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium dark:text-gray-200 text-left"
+                    className="block text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200 mb-1"
                   >
                     Password
                   </label>
@@ -256,14 +257,14 @@ function RegisterPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
-                    className="w-full p-1.5 sm:p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent outline-none"
+                    className="w-full p-2 sm:p-3 text-sm sm:text-base border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-transparent text-gray-900 dark:text-gray-100 transition"
                   />
                 </div>
 
-                <div className="flex flex-col space-y-1">
+                <div className="flex flex-col">
                   <label
                     htmlFor="confirmPassword"
-                    className="block text-sm font-medium dark:text-gray-200 text-left"
+                    className="block text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200 mb-1"
                   >
                     Confirm Password
                   </label>
@@ -273,7 +274,7 @@ function RegisterPage() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Confirm your password"
-                    className="w-full p-1.5 sm:p-2 border-b border-gray-300 dark:border-gray-600 focus:border-[#0d9488] dark:focus:border-emerald-400 bg-transparent outline-none"
+                    className="w-full p-2 sm:p-3 text-sm sm:text-base border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-transparent text-gray-900 dark:text-gray-100 transition mb-5"
                   />
                 </div>
               </div>
@@ -290,7 +291,7 @@ function RegisterPage() {
                 Already have an account?{" "}
                 <Link
                   to="/login"
-                  className="text-[#0d9488] dark:text-emerald-400 hover:text-[#34d399]"
+                  className="text-[#0d9488] dark:text-emerald-400 hover:text-[#134e4a]"
                 >
                   Log in
                 </Link>

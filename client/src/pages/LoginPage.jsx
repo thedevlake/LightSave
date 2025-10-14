@@ -118,7 +118,7 @@ function LoginPage() {
               className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent drop-shadow-lg"
               style={{
                 backgroundImage:
-                  "linear-gradient(90deg, #134e4a 0%, #0d9488 80%, #34d399 60%, #bbf7d0 85%, #ffffff 100%)",
+                  "linear-gradient(200deg, #134e4a 0%, #0d9488 80%, #34d399 30%, #134e4a 65%, #134e4a 100%)",
               }}
             >
               LightSave
@@ -163,7 +163,7 @@ function LoginPage() {
           )}
 
           <div className="space-y-4">
-            <div>
+            <div className="flex flex-col space-y-1">
               <label
                 htmlFor="email"
                 className="block mb-1 text-xs sm:text-sm md:text-base font-medium text-gray-700 dark:text-gray-200"
@@ -171,7 +171,7 @@ function LoginPage() {
                 Email
               </label>
               <input
-                className="w-full p-2 border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:border-[#0d9488] dark:focus:border-emerald-400 focus:ring-0 bg-transparent outline-none transition"
+                className="w-full p-2 sm:p-3 text-sm sm:text-base border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-transparent text-gray-900 dark:text-gray-100 transition"
                 placeholder="Enter your email"
                 type="email"
                 id="email"
@@ -183,7 +183,7 @@ function LoginPage() {
               />
             </div>
 
-            <div>
+            <div className="flex flex-col space-y-1">
               <label
                 htmlFor="password"
                 className="block mb-1 text-xs sm:text-sm md:text-base font-medium text-gray-700 dark:text-gray-200"
@@ -192,7 +192,7 @@ function LoginPage() {
               </label>
 
               <input
-                className="w-full p-2 border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 focus:border-[#0d9488] dark:focus:border-emerald-400 focus:ring-0 bg-transparent outline-none transition"
+                className="w-full p-2 sm:p-3 text-sm sm:text-base border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-transparent text-gray-900 dark:text-gray-100 transition"
                 placeholder="Enter your password"
                 type="password"
                 id="password"
