@@ -8,7 +8,6 @@ It helps users log income and expenses, set savings goals, and view clear financ
 ## 🚀 Features (MVP)
 - 🔐 User registration and login (JWT authentication)
 - 📊 Dashboard with income, expenses, and balance summary
-- ➕ Add, ✏️ edit, and ❌ delete income/expense entries
 - 🎯 Savings goals with progress tracking
 - 📱 Responsive and lightweight design
 
@@ -23,11 +22,7 @@ It helps users log income and expenses, set savings goals, and view clear financ
 ---
 
 ## 📌 Project Status
-Currently in **Frontend Development Phase**  
-- ✅ Completed user flow  
-- ✅ Finalized flow diagrams  
-- 🚧 Building initial UI screens  
-- 📚 Learning React while building  
+Completed based on the PRD. But looking foward to future enhancements. 
 
 ---
 
