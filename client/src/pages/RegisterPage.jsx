@@ -11,6 +11,7 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { ModeToggle } from "@/components/mode-toggle";
 
 function RegisterPage() {
   const [firstname, setFirstname] = useState("");
@@ -123,11 +124,14 @@ function RegisterPage() {
     <div
       className={`flex flex-col items-center justify-center w-full min-h-[100dvh] px-4 sm:px-6 py-8 sm:py-10 font-raleway bg-gradient-to-tr from-[#04520e] via-[#e5ded2] to-[#04520e] dark:from-black dark:via-[#0f2f2f] dark:to-black overflow-x-hidden transition-all duration-700 ease-in-out ${isVisible ? "opacity-100" : "opacity-0"}`}
     >
-      <div className="absolute top-4 left-4 z-20 text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">
-        Powered by{" "}
-        <span className="font-semibold text-white dark:text-emerald-300">
-          TheFifthLab
-        </span>
+      <div className="absolute top-4 left-0 right-0 z-20 flex items-center justify-between px-4 sm:px-8 text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">
+        <div>
+          Powered by{" "}
+          <span className="font-semibold text-white dark:text-emerald-300">
+            TheFifthLab
+          </span>
+        </div>
+        <ModeToggle />
       </div>
       {/* <div className="absolute inset-0 z-0 backdrop-blur-xl bg-white/30 dark:bg-black/40" /> */}
       <div className="absolute inset-0 z-0 h-full w-full overflow-hidden">
@@ -142,7 +146,7 @@ function RegisterPage() {
       </div>
 
       <div className="flex flex-col items-center justify-center w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto gap-6 sm:gap-8 md:gap-10 px-4 sm:px-8 md:px-0 z-10">
-        <div className="text-center space-y-4">
+        <div className="text-center sm:space-y-4 mt-20 sm:mt-10">
           <h1>
             <span
               className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent drop-shadow-lg break-words"
@@ -155,7 +159,7 @@ function RegisterPage() {
               LightSave
             </span>
           </h1>
-          <p className="text-xs sm:text-sm md:text-base text-gray-700 dark:text-gray-200 max-w-md mx-auto leading-relaxed break-words">
+          <p className="hidden sm:block text-xs sm:text-sm md:text-base text-gray-700 dark:text-gray-200 max-w-md mx-auto leading-relaxed break-words">
             Helping you make smarter financial decisions with ease and clarity.
           </p>
         </div>

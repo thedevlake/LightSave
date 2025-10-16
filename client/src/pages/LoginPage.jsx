@@ -3,6 +3,7 @@ import Aurora from "@/components/Aurora";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircleIcon, CheckCircleIcon, LoaderCircle } from "lucide-react";
 import { Link, useRouter } from "@tanstack/react-router";
+import { ModeToggle } from "@/components/mode-toggle";
 
 const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/auth/login`;
 
@@ -93,11 +94,15 @@ function LoginPage() {
         isVisible ? "opacity-100" : "opacity-50"
       }`}
     >
-      <div className="absolute top-4 left-4 z-20 text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">
-        Powered by{" "}
-        <span className="font-semibold text-white dark:text-emerald-300">
-          TheFifthLab
-        </span>
+      <div className="absolute top-4 left-0 right-0 z-20 flex items-center justify-between px-4 sm:px-8 text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">
+        <div>
+          Powered by{" "}
+          <span className="font-semibold text-white dark:text-emerald-300">
+            TheFifthLab
+          </span>
+        </div>
+
+        <ModeToggle />
       </div>
       {/* Frosted glass overlay */}
       <div className="absolute inset-0 z-0 backdrop-blur-xl bg-white/30 dark:bg-black/40" />
