@@ -15,7 +15,7 @@ It helps users log income and expenses, set savings goals, and view clear financ
 
 ## 🛠️ Tech Stack
 - **Frontend:** React + Vite + Tailwind CSS  
-- **Backend (Future):** Node.js + Express + MongoDB  
+- **Backend:** Node.js + Express + MongoDB  
 - **Authentication:** JWT  
 - **Charts & Visuals:** Recharts / Chart.js  
 
