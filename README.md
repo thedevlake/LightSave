@@ -24,11 +24,6 @@ It helps users log income and expenses, set savings goals, and view clear financ
 ## 📌 Project Status
 Completed based on the PRD. But looking foward to future enhancements. 
 
----
-
-## 🤝 Collaboration
-This project is being built by **Sofia** and **Bryant** as part of a team project.  
-We are collaborating via GitHub branches and pull requests.  
 
 ---
 
